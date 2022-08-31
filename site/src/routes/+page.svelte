@@ -16,6 +16,10 @@
 	).sort((a, b) => b.victories - a.victories || a.display_name.localeCompare(b.display_name));
 </script>
 
+<svelte:head>
+	<title>Stream Avatar Leaderboard</title>
+</svelte:head>
+
 <h1>Stream Avatar Leaderboard</h1>
 
 <ol>
