@@ -6,6 +6,8 @@ on:
     paths: ["site/**"]
   workflow_dispatch:
 
+concurrency: ${{ github.ref }}
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest

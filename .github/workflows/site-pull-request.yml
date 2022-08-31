@@ -2,6 +2,8 @@ name: Build pull request
 
 on: pull_request
 
+concurrency: ${{ github.ref }}
+
 jobs:
   build_bot:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
