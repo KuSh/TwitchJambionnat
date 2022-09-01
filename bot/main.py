@@ -6,8 +6,11 @@ import twitchio
 from dotenv import load_dotenv
 from firebase_admin import firestore
 
-BR_VICTORY_PATTERN = \
-    r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$"
+PATTERNS = {
+    "battleroyale:victory": r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$",
+    "battleroyale:poop": r"^(?P<name>\w+) a gagné 5 dol-lards en mangeant du caca !$",
+    "basketball:victory": r"^(?P<name>\w+) Victory \+150$"
+}
 
 
 class Bot(twitchio.Client):
@@ -26,26 +29,33 @@ class Bot(twitchio.Client):
         if message.author.name != self.nick:
             return
 
-        # Only react to BR victories, and exclude streamer's one
-        # TODO: Check if message can change
-        match = re.match(BR_VICTORY_PATTERN, message.content)
-        if match is None or match.group("name") == message.author.name:
-            return
+        # Test patterns
+        for type, pattern in PATTERNS.items():
+            match = re.match(pattern, message.content)
 
-        # Retrieve user to be able to use its display_name
-        name = match.group("name")
-        users = await self.fetch_users([name])
-        if len(users) != 1:
-            print(f"error: can't find twitch user '{name}'")
-            return
+            if match is None:
+                continue
 
-        # Add DB entry
-        db.collection(u"events").add({
-            "type": "battleroyale:victory",
-            "timestamp": message.timestamp,
-            "name": users[0].name,
-            "display_name": users[0].display_name,
-        })
+            # Convert name to lowercase
+            name = match.group("name").lower()
+
+            # Exclude streamer's event
+            if name == self.nick:
+                return
+
+            # Retrieve user to get its display_name
+            user, *_ = await self.fetch_users([name])
+            if user is None:
+                print(f"error: can't find twitch user '{name}'")
+                return
+
+            # Add DB entry
+            db.collection(u"events").add({
+                "type": type,
+                "timestamp": message.timestamp,
+                "name": user.name,
+                "display_name": user.display_name,
+            })
 
 
 # Load .env environment variables
