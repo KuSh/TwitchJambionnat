@@ -13,8 +13,15 @@ jobs:
         working-directory: bot
     steps:
       - uses: actions/checkout@v3
-      - run: pip install pycodestyle
+      - uses: actions/setup-python@v4
+        with:
+          cache: "pip"
+          cache-dependency-path: |
+            bot/setup.cfg
+            bot/requirements.txt
+      - run: pip install -q pycodestyle -r requirements.txt
       - run: pycodestyle .
+      - run: python -m py_compile main.py
   build_site:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
@@ -23,6 +30,11 @@ jobs:
         working-directory: site
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: |
+            site/package-lock.json
       - run: npm ci
       - run: npm run check
       - run: npm run lint
