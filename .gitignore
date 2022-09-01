@@ -18,3 +18,7 @@
 .env
 .env.*
 .local
+
+# Ignore firebase files
+.firebase
+.firebaserc
