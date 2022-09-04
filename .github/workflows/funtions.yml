@@ -1,0 +1,28 @@
+name: Build and deploy functions
+
+on:
+  push:
+    branches: [main]
+    paths: ["functions/**"]
+
+concurrency: ${{ github.ref }}
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          GOOGLE_APPLICATION_CREDENTIALS="$(mktemp)"
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS" >> $GITHUB_ENV
+          echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+      - run: |
+          npm ci
+          npm run build -w functions
+          npx -q firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          npx -q firebase deploy --only functions

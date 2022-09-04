@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start:emulators": "firebase emulators:start --only firestore --import .data --export-on-exit",
+    "start:functions": "npm run start -w functions",
     "start:site": "npm run start -w site",
     "start": "npm-run-all --parallel start:**",
     "check": "npm run check --workspaces --if-present",
@@ -26,6 +27,7 @@
   },
   "workspaces": [
     "site",
+    "functions",
     "tools"
   ]
 }
