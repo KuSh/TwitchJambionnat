@@ -5,20 +5,23 @@ import firebase_admin
 import twitchio
 from dotenv import load_dotenv
 from firebase_admin import firestore
+from google.auth.credentials import AnonymousCredentials
+from google.cloud import firestore
 
 PATTERNS = {
     "battleroyale:victory": r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$",
     "battleroyale:poop": r"^(?P<name>\w+) a gagné 5 dol-lards en mangeant du caca !$",
-    "basketball:victory": r"^(?P<name>\w+) Victory \+150$"
+    "basketball:victory": r"^(?P<name>\w+) Victory \+150$",
 }
 
 
 class Bot(twitchio.Client):
-
     def __init__(self):
         # Initialise our Bot with access token and the channel to join on boot
-        super().__init__(token=os.getenv("TWITCH_ACCESS_TOKEN"),
-                         initial_channels=[os.getenv("TWITCH_CHANNEL")])
+        super().__init__(
+            token=os.getenv("TWITCH_ACCESS_TOKEN"),
+            initial_channels=[os.getenv("TWITCH_CHANNEL")],
+        )
 
     async def event_ready(self):
         # Notify us when everything is ready!
@@ -50,20 +53,25 @@ class Bot(twitchio.Client):
                 return
 
             # Add DB entry
-            db.collection(u"events").add({
-                "type": type,
-                "timestamp": message.timestamp,
-                "name": user.name,
-                "display_name": user.display_name,
-            })
+            db.collection("events").add(
+                {
+                    "type": type,
+                    "timestamp": message.timestamp,
+                    "name": user.name,
+                    "display_name": user.display_name,
+                }
+            )
 
 
 # Load .env environment variables
 load_dotenv()
 
 # Setup db connexion
-firebase_admin.initialize_app()
-db = firestore.client()
+if os.getenv("FIRESTORE_EMULATOR_HOST") is not None:
+    db = firestore.Client(credentials=AnonymousCredentials())
+else:
+    firebase_admin.initialize_app()
+    db = firestore.client()
 
 # Start the bot
 Bot().run()

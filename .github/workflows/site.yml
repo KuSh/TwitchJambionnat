@@ -24,11 +24,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: |
-            site/package-lock.json
-      - run: npm ci && npm run build
-        working-directory: site
+          cache-dependency-path: package-lock.json
       - run: |
-          npx -q firebase-tools use ${{ secrets.FIREBASE_PROJECT_ID }}
-          npx -q firebase-tools target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
-          npx -q firebase-tools deploy --only hosting:site
+          npm ci
+          npm run build -w site
+          npx -q firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          npx -q firebase target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
+          npx -q firebase deploy --only hosting:site

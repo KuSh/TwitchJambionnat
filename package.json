@@ -1,0 +1,31 @@
+{
+  "name": "sa-leaderboard",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "Collects and display battle royal leaderboard per months",
+  "author": "KuSh (https://github.com/KuSh)",
+  "github": "KuSh/Twitch-SA-Leaderboard",
+  "homepage": "https://github.com/KuSh/Twitch-SA-Leaderboard#readme",
+  "bugs": "https://github.com/KuSh/Twitch-SA-Leaderboard/issues",
+  "engines": {
+    "node": "^16",
+    "npm": "^8"
+  },
+  "scripts": {
+    "start:emulators": "firebase emulators:start --only firestore --import .data --export-on-exit",
+    "start:site": "npm run start -w site",
+    "start": "npm-run-all --parallel start:**",
+    "check": "npm run check --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "devDependencies": {
+    "firebase-tools": "^11.8.0",
+    "npm-run-all": "^4.1.5"
+  },
+  "workspaces": [
+    "site",
+    "tools"
+  ]
+}

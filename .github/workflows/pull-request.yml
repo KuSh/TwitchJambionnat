@@ -5,7 +5,7 @@ on: pull_request
 concurrency: ${{ github.ref }}
 
 jobs:
-  build_bot:
+  build_python:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
     defaults:
@@ -17,25 +17,23 @@ jobs:
         with:
           cache: "pip"
           cache-dependency-path: |
-            bot/setup.cfg
             bot/requirements.txt
-      - run: pip install -q pycodestyle -r requirements.txt
-      - run: pycodestyle .
-      - run: python -m py_compile main.py
-  build_site:
+            bot/requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: |
+          black --check .
+          python -m py_compile main.py
+  build_node:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: |
-            site/package-lock.json
-      - run: npm ci
-      - run: npm run check
-      - run: npm run lint
-      - run: npm run build
+          cache-dependency-path: package-lock.json
+      - run: |
+          npm ci
+          npm run check
+          npm run lint
+          npm run build
