@@ -1,15 +1,15 @@
-import { region } from "firebase-functions";
+import { logger, region } from "firebase-functions";
 
 export const onCreateEvent = region("europe-west1")
   .runWith({
     secrets: ["GITHUB_TOKEN"],
   })
   .firestore.document("events/{docId}")
-  .onCreate((change) => {
+  .onCreate(async (change) => {
     if (change.data().type !== "basketball:victory") return;
 
     const { GITHUB_TOKEN } = process.env;
-    return fetch(
+    const response = await fetch(
       "https://api.github.com/repos/KuSh/Twitch-SA-Leaderboard/actions/workflows/site.yml/dispatches",
       {
         method: "POST",
@@ -21,4 +21,8 @@ export const onCreateEvent = region("europe-west1")
         },
       }
     );
+
+    if (!response.ok) {
+      logger.error(await response.json());
+    }
   });
