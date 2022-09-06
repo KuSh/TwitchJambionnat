@@ -1,4 +1,5 @@
 import { logger, region } from "firebase-functions";
+import fetch from "node-fetch";
 
 export const onCreateEvent = region("europe-west1")
   .runWith({
