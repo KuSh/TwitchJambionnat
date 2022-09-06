@@ -4,6 +4,7 @@ interface BaseEvent {
 }
 
 export const BatteRoyalVictoryType = "battleroyale:victory";
+export const MarblesVictoryType = "marbles:victory";
 
 export interface BatteRoyalVictory extends BaseEvent {
   type: typeof BatteRoyalVictoryType;
@@ -11,4 +12,10 @@ export interface BatteRoyalVictory extends BaseEvent {
   display_name: string;
 }
 
-export type Event = BatteRoyalVictory;
+export interface MarblesVictory extends BaseEvent {
+  type: typeof MarblesVictoryType;
+  name: string;
+  display_name: string;
+}
+
+export type Event = BatteRoyalVictory | MarblesVictory;

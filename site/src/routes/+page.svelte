@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
+  import { MarblesVictoryType } from "$lib/types";
 </script>
 
 <script lang="ts">
@@ -9,9 +10,13 @@
 
   export let leaderboard = Array.from(
     data?.victories
-      ?.reduce((acc, { name, display_name }) => {
+      ?.reduce((acc, { name, display_name, type }) => {
         const { victories } = acc.get(name) ?? { victories: 0 };
-        return acc.set(name, { name, display_name, victories: victories + 1 });
+        return acc.set(name, {
+          name,
+          display_name,
+          victories: victories + (type === MarblesVictoryType ? 5 : 1),
+        });
       }, new Map<string, { name: string; display_name: string; victories: number }>())
       .values()
   ).sort(

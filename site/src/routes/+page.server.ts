@@ -1,5 +1,10 @@
 import { env } from "$env/dynamic/private";
-import { BatteRoyalVictoryType, type BatteRoyalVictory } from "$lib/types";
+import {
+  BatteRoyalVictoryType,
+  MarblesVictoryType,
+  type BatteRoyalVictory,
+  type MarblesVictory,
+} from "$lib/types";
 import { Firestore } from "@google-cloud/firestore";
 import { DateTime } from "luxon";
 
@@ -17,7 +22,7 @@ export const load = async () => {
     ssl: FIRESTORE_EMULATOR_HOST ? false : undefined,
   })
     .collection("events")
-    .where("type", "==", BatteRoyalVictoryType)
+    .where("type", "in", [BatteRoyalVictoryType, MarblesVictoryType])
     .where("timestamp", ">=", DateTime.local().startOf("month").toJSDate())
     .get()
     .then(({ docs }) =>
@@ -26,7 +31,7 @@ export const load = async () => {
         return {
           timestamp: timestamp.toMillis(),
           ...rest,
-        } as BatteRoyalVictory;
+        } as BatteRoyalVictory | MarblesVictory;
       })
     );
 
