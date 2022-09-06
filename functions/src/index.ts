@@ -7,7 +7,7 @@ export const onCreateEvent = region("europe-west1")
   })
   .firestore.document("events/{docId}")
   .onCreate(async (change) => {
-    if (change.data().type !== "basketball:victory") return;
+    if (change.data().type !== "battleroyale:victory") return;
 
     const { GITHUB_TOKEN } = process.env;
     const response = await fetch(
