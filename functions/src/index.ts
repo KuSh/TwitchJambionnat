@@ -3,15 +3,16 @@ import fetch from "node-fetch";
 
 export const onCreateEvent = region("europe-west1")
   .runWith({
-    secrets: ["GITHUB_TOKEN"],
+    secrets: ["GITHUB_REPOSITORY", "GITHUB_TOKEN", "GITHUB_WORKFLOW"],
   })
   .firestore.document("events/{docId}")
   .onCreate(async (change) => {
     if (change.data().type !== "battleroyale:victory") return;
 
-    const { GITHUB_TOKEN } = process.env;
+    const { GITHUB_REPOSITORY, GITHUB_TOKEN, GITHUB_WORKFLOW } = process.env;
+
     const response = await fetch(
-      "https://api.github.com/repos/KuSh/Twitch-SA-Leaderboard/actions/workflows/site.yml/dispatches",
+      `https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/${GITHUB_WORKFLOW}/dispatches`,
       {
         method: "POST",
         body: JSON.stringify({ ref: "main" }),
