@@ -25,7 +25,10 @@ export const onCreateEvent = region("europe-west1")
     );
 
     if (!response.ok) {
-      logger.error(await response.json());
+      logger.error(
+        `Status ${response.url} on ${response.status}`,
+        await response.json()
+      );
       return false;
     }
 
