@@ -28,6 +28,6 @@ jobs:
       - run: |
           yarn install --frozen-lockfile
           yarn workspace site build
-          yarn exec firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
-          yarn exec firebase target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
-          yarn exec firebase deploy --only hosting:site
+          yarn exec -- firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          yarn exec -- firebase target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
+          yarn exec -- firebase deploy --only hosting:site

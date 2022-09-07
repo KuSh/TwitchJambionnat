@@ -24,5 +24,5 @@ jobs:
       - run: |
           yarn install --frozen-lockfile
           yarn workspace functions run build
-          yarn exec firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
-          yarn exec firebase deploy --only functions
+          yarn exec -- firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          yarn exec -- firebase deploy --only functions
