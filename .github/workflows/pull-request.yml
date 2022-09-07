@@ -31,9 +31,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          cache: "yarn"
+          cache-dependency-path: yarn.lock
       - run: |
-          npm ci
-          npm run lint
-          npm run check
+          yarn install --frozen-lockfile
+          yarn run lint
+          yarn run check

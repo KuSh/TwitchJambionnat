@@ -23,11 +23,11 @@ jobs:
           echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
-          cache: "npm"
-          cache-dependency-path: package-lock.json
+          cache: "yarn"
+          cache-dependency-path: yarn.lock
       - run: |
-          npm ci
-          npm run build -w site
-          npx -q firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
-          npx -q firebase target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
-          npx -q firebase deploy --only hosting:site
+          yarn install --frozen-lockfile
+          yarn workspace site build
+          yarn exec firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          yarn exec firebase target:apply hosting site ${{ secrets.FIREBASE_SITE_ID }}
+          yarn exec firebase deploy --only hosting:site
