@@ -1,27 +1,37 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
   import { MarblesVictoryType } from "$lib/types";
+  import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
+
+  type Player = {
+    name: string;
+    display_name: string;
+    marbles: number;
+    points: number;
+  };
 </script>
 
 <script lang="ts">
-  import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
-
   export let data: PageServerData;
 
-  export let leaderboard = Array.from(
-    data?.victories
-      ?.reduce((acc, { name, display_name, type }) => {
-        const { victories } = acc.get(name) ?? { victories: 0 };
+  export let events = data.events;
+
+  export let leaderboard: Player[] = Array.from(
+    events
+      ?.reduce((acc, { type, name, display_name }) => {
+        const isMarble = type === MarblesVictoryType;
+        const { points, marbles } = acc.get(name) ?? { points: 0, marbles: 0 };
         return acc.set(name, {
           name,
           display_name,
-          victories: victories + (type === MarblesVictoryType ? 5 : 1),
+          marbles: marbles + (isMarble ? 1 : 0),
+          points: points + (isMarble ? 5 : 1),
         });
-      }, new Map<string, { name: string; display_name: string; victories: number }>())
+      }, new Map<string, Player>())
       .values()
   ).sort(
     (a, b) =>
-      b.victories - a.victories || a.display_name.localeCompare(b.display_name)
+      b.points - a.points || a.display_name.localeCompare(b.display_name)
   );
 </script>
 
@@ -34,9 +44,15 @@
   <h1 class="title">Stream Avatar Leaderboard</h1>
 
   <ol>
-    {#each leaderboard as { name, display_name, victories }}
+    {#each leaderboard as { name, display_name, marbles, points }}
       <li>
-        <a href="https://www.twitch.tv/{name}">{display_name}</a>: {victories}
+        <a href="https://www.twitch.tv/{name}">{display_name}</a>:
+        {points}
+        {marbles
+          ? `(${Array.from({ length: marbles })
+              .map(() => "🪩")
+              .join(" ")})`
+          : ""}
       </li>
     {/each}
   </ol>

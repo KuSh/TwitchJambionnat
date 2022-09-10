@@ -2,11 +2,24 @@ import { env } from "$env/dynamic/private";
 import {
   BatteRoyalVictoryType,
   MarblesVictoryType,
-  type BatteRoyalVictory,
-  type MarblesVictory,
+  type Event,
 } from "$lib/types";
-import { Firestore } from "@google-cloud/firestore";
+import {
+  Firestore,
+  QueryDocumentSnapshot,
+  Timestamp,
+} from "@google-cloud/firestore";
 import { DateTime } from "luxon";
+
+type EventDocument = Omit<Event, "timestamp"> & { timestamp: Timestamp };
+
+const map = (doc: QueryDocumentSnapshot): Event => {
+  const { timestamp, ...rest } = doc.data() as EventDocument;
+  return {
+    timestamp: timestamp.toMillis(),
+    ...rest,
+  };
+};
 
 export const load = async () => {
   const {
@@ -15,25 +28,27 @@ export const load = async () => {
     GCLOUD_PROJECT,
   } = env;
 
-  const victories = new Firestore({
+  const events = new Firestore({
     projectId: GCLOUD_PROJECT,
     keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
     host: FIRESTORE_EMULATOR_HOST,
     ssl: FIRESTORE_EMULATOR_HOST ? false : undefined,
-  })
-    .collection("events")
-    .where("type", "in", [BatteRoyalVictoryType, MarblesVictoryType])
-    .where("timestamp", ">=", DateTime.local().startOf("month").toJSDate())
-    .get()
-    .then(({ docs }) =>
-      docs.map((doc) => {
-        const { timestamp, ...rest } = doc.data();
-        return {
-          timestamp: timestamp.toMillis(),
-          ...rest,
-        } as BatteRoyalVictory | MarblesVictory;
-      })
-    );
+  }).collection("events");
 
-  return { victories };
+  const startOfMonth = DateTime.local().startOf("month");
+
+  const battles = await events
+    .where("type", "==", BatteRoyalVictoryType)
+    .where("timestamp", ">=", startOfMonth.toJSDate())
+    .get()
+    .then(({ docs }) => docs.map(map));
+
+  const marbles = await events
+    .where("type", "==", MarblesVictoryType)
+    .where("timestamp", ">=", startOfMonth.minus({ months: 1 }).toJSDate())
+    .where("timestamp", "<", startOfMonth.toJSDate())
+    .get()
+    .then(({ docs }) => docs.map(map));
+
+  return { events: battles.concat(marbles) };
 };

@@ -11,6 +11,7 @@ const seedEvents = async () => {
     "battleroyale:victory",
     "battleroyale:poop",
     "basketball:victory",
+    "marbles:victory",
   ];
 
   if (!FIRESTORE_EMULATOR_HOST) {
@@ -26,7 +27,7 @@ const seedEvents = async () => {
   const events = db.collection("events");
 
   const USERS = Array.from({
-    length: Math.ceil(10 + Math.random() * 10),
+    length: Math.ceil(20 + Math.random() * 10),
   }).map(() => {
     const display_name = faker.internet.userName();
     return { name: display_name.toLowerCase(), display_name };
@@ -34,13 +35,16 @@ const seedEvents = async () => {
 
   await Promise.all(
     Array.from({
-      length: Math.ceil(30 + Math.random() * 20),
+      length: Math.ceil(60 + Math.random() * 20),
     }).map((_, i) => {
       const type = i % 3 ? TYPES[0] : faker.helpers.arrayElement(TYPES);
       const timestamp =
         i % 3
-          ? faker.date.recent(new Date().getDate() - 1)
-          : faker.date.between(-60, 30);
+          ? faker.date.recent(1)
+          : faker.date.between(
+              new Date().getTime() - 60 * 86400000,
+              new Date().getTime() + 30 * 86400000
+            );
       const { name, display_name } = faker.helpers.arrayElement(USERS);
       return events.add({ type, timestamp, name, display_name });
     })
