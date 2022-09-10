@@ -1,3 +1,3 @@
 # SA Leaderboard
 
-Collects and display battle royal leaderboard per months
+Collects and display battle royale leaderboard per months

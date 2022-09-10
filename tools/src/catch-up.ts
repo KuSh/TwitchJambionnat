@@ -5,7 +5,7 @@ import fetch from "node-fetch";
 
 dotenv.config();
 
-const BATTE_ROYAL_VICTORIES: { name: string; timestamp: Date }[] = [
+const BATTLE_ROYALE_VICTORIES: { name: string; timestamp: Date }[] = [
   {
     name: "uaeruz",
     timestamp: DateTime.local().plus({ minutes: 6, seconds: 10 }).toJSDate(),
@@ -46,7 +46,7 @@ const catchUp = async () => {
   } = process.env;
 
   const users = await twitchGetUsers(
-    BATTE_ROYAL_VICTORIES.concat(MARBLES_VICTORIES).map(({ name }) => name)
+    BATTLE_ROYALE_VICTORIES.concat(MARBLES_VICTORIES).map(({ name }) => name)
   ).then((r) =>
     r.reduce(
       (acc, { login, display_name }) => acc.set(login, display_name),
@@ -54,7 +54,7 @@ const catchUp = async () => {
     )
   );
 
-  const events = BATTE_ROYAL_VICTORIES.map(({ name, timestamp }) => ({
+  const events = BATTLE_ROYALE_VICTORIES.map(({ name, timestamp }) => ({
     type: "battleroyale:victory",
     timestamp,
     name,

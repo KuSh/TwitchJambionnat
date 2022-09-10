@@ -25,7 +25,7 @@ class Bot(twitchio.Client):
 
     async def event_ready(self):
         # Notify us when everything is ready!
-        print("Listening to battle royal events...")
+        print("Listening to battle royale events...")
 
     async def event_message(self, message):
         # Ignore messages not authored by streamer

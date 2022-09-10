@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
-  import { MarblesVictoryType } from "$lib/types";
+  import { BattleRoyaleVictoryType, MarblesVictoryType } from "$lib/types";
   import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
 
   type Player = {
@@ -56,6 +56,10 @@
       </li>
     {/each}
   </ol>
+  <br />
+  Nombre de battles royale : {events
+    .filter(({ type }) => type === BattleRoyaleVictoryType)
+    .reduce((count) => count + 1, 0)}
 </main>
 
 <style>

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "Apache-2.0",
-  "description": "Collects and display battle royal leaderboard per months",
+  "description": "Collects and display battle royale leaderboard per months",
   "author": "KuSh (https://github.com/KuSh)",
   "github": "KuSh/Twitch-SA-Leaderboard",
   "homepage": "https://github.com/KuSh/Twitch-SA-Leaderboard#readme",

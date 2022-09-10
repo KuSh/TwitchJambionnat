@@ -3,11 +3,11 @@ interface BaseEvent {
   timestamp: number;
 }
 
-export const BatteRoyalVictoryType = "battleroyale:victory";
+export const BattleRoyaleVictoryType = "battleroyale:victory";
 export const MarblesVictoryType = "marbles:victory";
 
-export interface BatteRoyalVictory extends BaseEvent {
-  type: typeof BatteRoyalVictoryType;
+export interface BattleRoyaleVictory extends BaseEvent {
+  type: typeof BattleRoyaleVictoryType;
   name: string;
   display_name: string;
 }
@@ -18,4 +18,4 @@ export interface MarblesVictory extends BaseEvent {
   display_name: string;
 }
 
-export type Event = BatteRoyalVictory | MarblesVictory;
+export type Event = BattleRoyaleVictory | MarblesVictory;
