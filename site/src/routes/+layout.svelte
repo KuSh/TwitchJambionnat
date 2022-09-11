@@ -37,4 +37,19 @@
       --columns: 4;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    ::selection {
+      background-color: #004daa;
+      color: #e8e6e3;
+    }
+    html,
+    body {
+      background-color: #181a1b;
+      color: #e8e6e3;
+    }
+    a {
+      color: #3391ff;
+    }
+  }
 </style>
