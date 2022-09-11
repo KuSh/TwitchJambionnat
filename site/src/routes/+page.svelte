@@ -49,7 +49,7 @@
         <a href="https://www.twitch.tv/{name}">{display_name}</a>:
         {points}
         {#if marbles}
-          <span class="marbles">🏆</span>
+          <span class="marbles">🌕</span>
         {/if}
       </li>
     {/each}
