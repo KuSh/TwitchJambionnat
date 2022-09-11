@@ -45,14 +45,12 @@
 
   <ol>
     {#each leaderboard as { name, display_name, marbles, points }}
-      <li>
+      <li class="player">
         <a href="https://www.twitch.tv/{name}">{display_name}</a>:
         {points}
-        {marbles
-          ? `(${Array.from({ length: marbles })
-              .map(() => "🪩")
-              .join(" ")})`
-          : ""}
+        {#if marbles}
+          <span class="marbles">🏆</span>
+        {/if}
       </li>
     {/each}
   </ol>
@@ -72,11 +70,20 @@
     align-items: center;
   }
 
-  .title {
-    text-align: center;
-  }
-
   .image {
     max-width: 100%;
+  }
+
+  .marbles {
+    font-size: 0.875rem;
+    margin-left: 0.25rem;
+  }
+
+  .player {
+    margin: 0.25rem 0;
+  }
+
+  .title {
+    text-align: center;
   }
 </style>
