@@ -43,8 +43,30 @@
   <img class="image" src={image} alt="" />
   <h1 class="title">Stream Avatar Leaderboard</h1>
 
-  <ol>
-    {#each leaderboard as { name, display_name, marbles, points }}
+  <div class="podium">
+    <div class="left">
+      <a href="https://www.twitch.tv/{leaderboard[0].name}"
+        >{leaderboard[0].display_name}</a
+      >
+      <div class="content" />
+    </div>
+    <p class="top">
+      <a href="https://www.twitch.tv/{leaderboard[1].name}"
+        >{leaderboard[1].display_name}</a
+      >
+      <span class="content" />
+    </p>
+
+    <div class="right">
+      <a href="https://www.twitch.tv/{leaderboard[1].name}"
+        >{leaderboard[1].display_name}</a
+      >
+      <div class="content" />
+    </div>
+  </div>
+
+  <ol start="4">
+    {#each leaderboard.slice(3) as { name, display_name, marbles, points }}
       <li class="player">
         <a href="https://www.twitch.tv/{name}">{display_name}</a>:
         {points}
@@ -85,5 +107,37 @@
 
   .title {
     text-align: center;
+  }
+
+  .podium {
+    display: flex;
+    align-items: end;
+  }
+
+  .podium div {
+    /*width: 3rem;*/
+    display: inline-block;
+  }
+
+  .podium .top {
+    /*background: rgb(39, 44, 56);*/
+    background: yellow;
+  }
+  .podium .top .content {
+    height: 3rem;
+  }
+
+  .podium .left {
+    background: orange;
+  }
+  .podium .left .content {
+    height: 2rem;
+  }
+
+  .podium .right {
+    background: red;
+  }
+  .podium .right .content {
+    height: 1rem;
   }
 </style>
