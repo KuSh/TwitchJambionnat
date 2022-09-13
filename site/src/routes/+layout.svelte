@@ -38,18 +38,33 @@
     }
   }
 
+  @media (prefers-color-scheme: light) {
+    :root {
+      --background-color: #ffffff;
+      --color: #000000;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #121212;
+      --color: #ffffff;
+    }
+  }
+
+  html,
+  body {
+    background-color: var(--background-color);
+    color: var(--color);
+  }
+
   @media (prefers-color-scheme: dark) {
     ::selection {
       background-color: #004daa;
       color: #e8e6e3;
     }
-    html,
-    body {
-      background-color: #181a1b;
-      color: #e8e6e3;
-    }
     a {
-      color: #3391ff;
+      color: #1976d2;
     }
   }
 </style>

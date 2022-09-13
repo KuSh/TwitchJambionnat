@@ -12,6 +12,8 @@
 </script>
 
 <script lang="ts">
+  import ExpansionPanel from "$lib/expansion-panel.svelte";
+
   export let data: PageServerData;
 
   export let events = data.events;
@@ -42,6 +44,8 @@
 <main class="container">
   <img class="image" src={image} alt="" />
   <h1 class="title">Stream Avatar Leaderboard</h1>
+
+  <ExpansionPanel title="test">Test</ExpansionPanel>
 
   <ol>
     {#each leaderboard as { name, display_name, marbles, points }}
