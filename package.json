@@ -34,9 +34,5 @@
     "site",
     "functions",
     "tools"
-  ],
-  "dependencies": {
-    "bulma": "^0.9.4",
-    "eslint": "^8.23.0"
-  }
+  ]
 }
