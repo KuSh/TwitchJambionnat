@@ -57,7 +57,7 @@
         <table class="table is-striped is-narrow is-hoverable">
           <thead>
             <tr>
-              <th>Position</th>
+              <th class="has-text-right">#</th>
               <th>Nom</th>
               <th>Score</th>
               <th />
@@ -66,7 +66,7 @@
           <tbody>
             {#each leaderboard as { name, display_name, marbles, points }, i}
               <tr>
-                <th class="has-text-centered">{i}</th>
+                <td class="has-text-right">{i + 1}</td>
                 <td>
                   <a href="https://www.twitch.tv/{name}">{display_name}</a>
                 </td>
