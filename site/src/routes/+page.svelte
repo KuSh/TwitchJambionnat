@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
+  import MarblesIcon from "$lib/assets/marbles.svg?raw";
   import { BattleRoyaleVictoryType, MarblesVictoryType } from "$lib/types";
   import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
 
@@ -39,51 +40,64 @@
   <title>Stream Avatar Leaderboard</title>
 </svelte:head>
 
-<main class="container">
-  <img class="image" src={image} alt="" />
-  <h1 class="title">Stream Avatar Leaderboard</h1>
-
-  <ol>
-    {#each leaderboard as { name, display_name, marbles, points }}
-      <li class="player">
-        <a href="https://www.twitch.tv/{name}">{display_name}</a>:
-        {points}
-        {#if marbles}
-          <span class="marbles">🌕</span>
-        {/if}
-      </li>
-    {/each}
-  </ol>
-  <br />
-  Nombre de battles royale : {events
-    .filter(({ type }) => type === BattleRoyaleVictoryType)
-    .reduce((count) => count + 1, 0)}
+<main class="container is-max-desktop">
+  <div class="card">
+    <header class="card-header">
+      <h1 class="card-header-title is-justify-content-center">
+        Stream Avatar Leaderboard
+      </h1>
+    </header>
+    <div class="card-image">
+      <figure class="image is-flex is-justify-content-center">
+        <img src={image} alt="The jambionnat king" />
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="content">
+        <table class="table is-striped is-narrow is-hoverable">
+          <thead>
+            <tr>
+              <th class="has-text-right">#</th>
+              <th>Nom</th>
+              <th>Score</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {#each leaderboard as { name, display_name, marbles, points }, i}
+              <tr>
+                <td class="has-text-right">{i + 1}</td>
+                <td>
+                  <a href="https://www.twitch.tv/{name}">{display_name}</a>
+                </td>
+                <td>{points}</td>
+                <td>
+                  {#if marbles}
+                    {@html MarblesIcon}
+                  {/if}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer class="card-footer">
+      <span class="card-footer-item">
+        Nombre de battles royale : {events
+          .filter(({ type }) => type === BattleRoyaleVictoryType)
+          .reduce((count) => count + 1, 0)}
+      </span>
+    </footer>
+  </div>
 </main>
 
-<style>
-  .container {
-    margin: 0 var(--container-mx);
-    max-width: var(--container-max-w);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+<style lang="scss">
+  .card-header {
+    box-shadow: unset;
   }
 
-  .image {
-    max-width: 100%;
-  }
-
-  .marbles {
-    font-size: 0.875rem;
-    margin-left: 0.25rem;
-  }
-
-  .player {
-    margin: 0.25rem 0;
-  }
-
-  .title {
-    text-align: center;
+  .image img {
+    width: auto;
   }
 </style>
