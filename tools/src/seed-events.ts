@@ -27,7 +27,7 @@ const seedEvents = async () => {
   const events = db.collection("events");
 
   const USERS = Array.from({
-    length: Math.ceil(20 + Math.random() * 10),
+    length: Math.ceil(30 + Math.random() * 10),
   }).map(() => {
     const display_name = faker.internet.userName();
     return { name: display_name.toLowerCase(), display_name };
@@ -35,7 +35,7 @@ const seedEvents = async () => {
 
   await Promise.all(
     Array.from({
-      length: Math.ceil(60 + Math.random() * 20),
+      length: Math.ceil(300 + Math.random() * 50),
     }).map((_, i) => {
       const type = i % 3 ? TYPES[0] : faker.helpers.arrayElement(TYPES);
       const timestamp =
