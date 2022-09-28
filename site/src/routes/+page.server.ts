@@ -1,5 +1,6 @@
 import { env } from "$env/dynamic/private";
 import {
+  BasketBallVictoryType,
   BattleRoyaleVictoryType,
   MarblesVictoryType,
   type Event,
@@ -28,7 +29,7 @@ export const load = async () => {
     GCLOUD_PROJECT,
   } = env;
 
-  const events = new Firestore({
+  const db = new Firestore({
     projectId: GCLOUD_PROJECT,
     keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
     host: FIRESTORE_EMULATOR_HOST,
@@ -37,18 +38,18 @@ export const load = async () => {
 
   const startOfMonth = DateTime.local().startOf("month");
 
-  const battles = await events
-    .where("type", "==", BattleRoyaleVictoryType)
+  const events = await db
+    .where("type", "in", [BattleRoyaleVictoryType, BasketBallVictoryType])
     .where("timestamp", ">=", startOfMonth.toJSDate())
     .get()
     .then(({ docs }) => docs.map(map));
 
-  const marbles = await events
+  const marbles = await db
     .where("type", "==", MarblesVictoryType)
     .where("timestamp", ">=", startOfMonth.minus({ months: 1 }).toJSDate())
     .where("timestamp", "<", startOfMonth.toJSDate())
     .get()
     .then(({ docs }) => docs.map(map));
 
-  return { events: battles.concat(marbles) };
+  return { events: events.concat(marbles) };
 };

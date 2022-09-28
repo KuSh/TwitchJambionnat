@@ -1,21 +1,16 @@
-interface BaseEvent {
-  type: string;
+type BaseEvent<T> = {
+  type: T;
   timestamp: number;
-}
+  name: string;
+  display_name: string;
+};
 
 export const BattleRoyaleVictoryType = "battleroyale:victory";
 export const MarblesVictoryType = "marbles:victory";
+export const BasketBallVictoryType = "basketball:victory";
 
-export interface BattleRoyaleVictory extends BaseEvent {
-  type: typeof BattleRoyaleVictoryType;
-  name: string;
-  display_name: string;
-}
+export type BattleRoyaleVictory = BaseEvent<typeof BattleRoyaleVictoryType>;
+export type MarblesVictory = BaseEvent<typeof MarblesVictoryType>;
+export type BasketBallVictory = BaseEvent<typeof BasketBallVictoryType>;
 
-export interface MarblesVictory extends BaseEvent {
-  type: typeof MarblesVictoryType;
-  name: string;
-  display_name: string;
-}
-
-export type Event = BattleRoyaleVictory | MarblesVictory;
+export type Event = BattleRoyaleVictory | MarblesVictory | BasketBallVictory;

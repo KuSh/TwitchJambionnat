@@ -1,13 +1,18 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
-  import { BattleRoyaleVictoryType, MarblesVictoryType } from "$lib/types";
+  import {
+    BasketBallVictoryType,
+    BattleRoyaleVictoryType,
+    MarblesVictoryType,
+  } from "$lib/types";
   import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
 
   type Player = {
     name: string;
     display_name: string;
     marbles: number;
-    points: number;
+    baskets: number;
+    battles: number;
   };
 </script>
 
@@ -16,22 +21,28 @@
 
   export let events = data.events;
 
-  export let leaderboard: Player[] = Array.from(
+  export const points = ({ battles, baskets, marbles }: Player) =>
+    battles + 3 * baskets + 5 * marbles;
+
+  export let players: Player[] = Array.from(
     events
       ?.reduce((acc, { type, name, display_name }) => {
-        const isMarble = type === MarblesVictoryType;
-        const { points, marbles } = acc.get(name) ?? { points: 0, marbles: 0 };
-        return acc.set(name, {
-          name,
-          display_name,
-          marbles: marbles + (isMarble ? 1 : 0),
-          points: points + (isMarble ? 5 : 1),
-        });
+        let { battles = 0, marbles = 0, baskets = 0 } = acc.get(name) ?? {};
+
+        if (type === MarblesVictoryType) {
+          marbles++;
+        } else if (type === BasketBallVictoryType) {
+          baskets++;
+        } else if (type === BattleRoyaleVictoryType) {
+          battles++;
+        }
+
+        return acc.set(name, { name, display_name, marbles, baskets, battles });
       }, new Map<string, Player>())
       .values()
   ).sort(
     (a, b) =>
-      b.points - a.points || a.display_name.localeCompare(b.display_name)
+      points(b) - points(a) || a.display_name.localeCompare(b.display_name)
   );
 </script>
 
@@ -44,13 +55,16 @@
   <h1 class="title">Stream Avatar Leaderboard</h1>
 
   <ol>
-    {#each leaderboard as { name, display_name, marbles, points }}
+    {#each players as player}
       <li class="player">
-        <a href="https://www.twitch.tv/{name}">{display_name}</a>:
-        {points}
-        {#if marbles}
-          <span class="marbles">🌕</span>
+        <a href="https://www.twitch.tv/{player.name}">{player.display_name}</a>:
+        {points(player)}
+        {#if player.marbles}
+          <span class="balls">🌕</span>
         {/if}
+        {#each new Array(player.baskets) as _}
+          <span class="balls">🏀</span>
+        {/each}
       </li>
     {/each}
   </ol>
@@ -74,7 +88,7 @@
     max-width: 100%;
   }
 
-  .marbles {
+  .balls {
     font-size: 0.875rem;
     margin-left: 0.25rem;
   }
