@@ -57,13 +57,15 @@
   <ol>
     {#each players as player}
       <li class="player">
-        <a href="https://www.twitch.tv/{player.name}">{player.display_name}</a>:
-        {points(player)}
+        <a href="https://www.twitch.tv/{player.name}">
+          {player.display_name}
+        </a>
+        <span class="points">: {points(player)}</span>
         {#if player.marbles}
-          <span class="balls">🌕</span>
+          <span class="ball">🌕</span>
         {/if}
         {#each new Array(player.baskets) as _}
-          <span class="balls">🏀</span>
+          <span class="ball">🏀</span>
         {/each}
       </li>
     {/each}
@@ -88,16 +90,26 @@
     max-width: 100%;
   }
 
-  .balls {
-    font-size: 0.875rem;
-    margin-left: 0.25rem;
+  .title {
+    text-align: center;
   }
 
   .player {
     margin: 0.25rem 0;
+    font-size: 0;
   }
 
-  .title {
-    text-align: center;
+  .player::marker,
+  .player > * {
+    font-size: 1rem;
+  }
+
+  .points {
+    margin-right: 0.25rem;
+  }
+
+  .ball {
+    font-size: 0.875rem;
+    margin-left: 0.25rem;
   }
 </style>
