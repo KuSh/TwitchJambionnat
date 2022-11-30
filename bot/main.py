@@ -14,6 +14,30 @@ PATTERNS = {
     "basketball:victory": r"^(?P<name>\w+) Victory \+150$",
 }
 
+COMMAND_PATTERN = r"^!jambot (?P<event>br|marbles|duel) @?(?P<name>\w+)$"
+COMMAND_EVENTS = {
+    "br": "battleroyale:victory",
+    "marbles": "marbles:victory",
+    "duel": "duel:victory"
+}
+
+
+def find_event(content):
+    """
+    Return event type and user name if content correspond to pattern
+    """
+    for event, pattern in PATTERNS.items():
+        match = re.match(pattern, content)
+        if match is not None:
+            return event, match.group("name").lower()
+
+    match = re.match(COMMAND_PATTERN, content)
+    if match is None:
+        return None, None
+
+    event, name = match.groups()
+    return COMMAND_EVENTS.get(event), name.lower()
+
 
 class Bot(twitchio.Client):
     def __init__(self):
@@ -32,35 +56,30 @@ class Bot(twitchio.Client):
         if message.author.name != self.nick:
             return
 
-        # Test patterns
-        for type, pattern in PATTERNS.items():
-            match = re.match(pattern, message.content)
+        # Find valid patterns
+        event, name = find_event(message.content)
+        if event is None or name is None:
+            return
 
-            if match is None:
-                continue
+        # Exclude streamer's event
+        if name == self.nick:
+            return
 
-            # Convert name to lowercase
-            name = match.group("name").lower()
+        # Retrieve user to get its display_name
+        user, *_ = await self.fetch_users([name])
+        if user is None:
+            print(f"error: can't find twitch user '{name}'")
+            return
 
-            # Exclude streamer's event
-            if name == self.nick:
-                return
-
-            # Retrieve user to get its display_name
-            user, *_ = await self.fetch_users([name])
-            if user is None:
-                print(f"error: can't find twitch user '{name}'")
-                return
-
-            # Add DB entry
-            db.collection("events").add(
-                {
-                    "type": type,
-                    "timestamp": message.timestamp,
-                    "name": user.name,
-                    "display_name": user.display_name,
-                }
-            )
+        # Add DB entry
+        db.collection("events").add(
+            {
+                "type": event,
+                "timestamp": message.timestamp,
+                "name": user.name,
+                "display_name": user.display_name,
+            }
+        )
 
 
 # Load .env environment variables
