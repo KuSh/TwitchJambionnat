@@ -4,7 +4,6 @@ import re
 import firebase_admin
 import twitchio
 from dotenv import load_dotenv
-from firebase_admin import firestore
 from google.auth.credentials import AnonymousCredentials
 from google.cloud import firestore
 
@@ -90,7 +89,7 @@ if os.getenv("FIRESTORE_EMULATOR_HOST") is not None:
     db = firestore.Client(credentials=AnonymousCredentials())
 else:
     firebase_admin.initialize_app()
-    db = firestore.client()
+    db = firebase_admin.firestore.client()
 
 # Start the bot
 Bot().run()
