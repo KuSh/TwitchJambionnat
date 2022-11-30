@@ -5,18 +5,37 @@ import fetch from "node-fetch";
 
 dotenv.config();
 
-const BATTLE_ROYALE_VICTORIES: { name: string; timestamp: Date }[] = [
-  {
-    name: "uaeruz",
-    timestamp: DateTime.local().plus({ minutes: 6, seconds: 10 }).toJSDate(),
-  },
-];
+const events = (
+  type: string,
+  events: { name: string; timestamp: Date }[]
+): { type: string; name: string; timestamp: Date }[] =>
+  events.map(({ name, timestamp }) => ({ type, name, timestamp }));
 
-const MARBLES_VICTORIES: { name: string; timestamp: Date }[] = [
-  {
-    name: "uaeruz",
-    timestamp: DateTime.local().plus({ minutes: 6, seconds: 10 }).toJSDate(),
-  },
+const EVENTS = [
+  ...events("battleroyale:victory", [
+    {
+      name: "uaeruz",
+      timestamp: DateTime.local(2022, 11, 30, 21, 47)
+        .plus({ minutes: 6, seconds: 10 })
+        .toJSDate(),
+    },
+  ]),
+  ...events("marbles:victory", [
+    {
+      name: "uaeruz",
+      timestamp: DateTime.local(2022, 11, 30, 21, 47)
+        .plus({ minutes: 6, seconds: 10 })
+        .toJSDate(),
+    },
+  ]),
+  ...events("duel:victory", [
+    {
+      name: "uaeruz",
+      timestamp: DateTime.local(2022, 11, 30, 21, 47)
+        .plus({ minutes: 6, seconds: 10 })
+        .toJSDate(),
+    },
+  ]),
 ];
 
 const twitchGetUsers = async (
@@ -31,11 +50,11 @@ const twitchGetUsers = async (
   return fetch(`https://api.twitch.tv/helix/users?${params}`, {
     headers: {
       Authorization: `Bearer ${TWITCH_ACCESS_TOKEN}`,
-      "Client-Id": TWITCH_CLIENT_ID!,
+      "Client-Id": `${TWITCH_CLIENT_ID}`,
     },
   })
     .then((r) => r.json())
-    .then((b: any) => b.data);
+    .then((b) => b.data);
 };
 
 const catchUp = async () => {
@@ -45,28 +64,19 @@ const catchUp = async () => {
     GCLOUD_PROJECT,
   } = process.env;
 
-  const users = await twitchGetUsers(
-    BATTLE_ROYALE_VICTORIES.concat(MARBLES_VICTORIES).map(({ name }) => name)
-  ).then((r) =>
+  const users = await twitchGetUsers(EVENTS.map(({ name }) => name)).then((r) =>
     r.reduce(
       (acc, { login, display_name }) => acc.set(login, display_name),
       new Map<string, string>()
     )
   );
 
-  const events = BATTLE_ROYALE_VICTORIES.map(({ name, timestamp }) => ({
-    type: "battleroyale:victory",
+  const events = EVENTS.map(({ type, name, timestamp }) => ({
+    type,
     timestamp,
     name,
     display_name: users.get(name),
-  })).concat(
-    MARBLES_VICTORIES.map(({ name, timestamp }) => ({
-      type: "marbles:victory",
-      timestamp,
-      name,
-      display_name: users.get(name),
-    }))
-  );
+  }));
 
   const db = await new Firestore({
     projectId: GCLOUD_PROJECT,

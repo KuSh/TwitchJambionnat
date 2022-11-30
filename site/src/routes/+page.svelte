@@ -3,6 +3,7 @@
   import {
     BasketBallVictoryType,
     BattleRoyaleVictoryType,
+    DuelVictoryType,
     MarblesVictoryType,
   } from "$lib/types";
   import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
@@ -13,6 +14,7 @@
     marbles: number;
     baskets: number;
     battles: number;
+    duels: number;
   };
 </script>
 
@@ -21,13 +23,18 @@
 
   export let events = data.events;
 
-  export const points = ({ battles, baskets, marbles }: Player) =>
-    battles + 3 * baskets + 5 * marbles;
+  export const points = ({ battles, baskets, marbles, duels }: Player) =>
+    battles + duels + 3 * baskets + 5 * marbles;
 
   export let players: Player[] = Array.from(
     events
       ?.reduce((acc, { type, name, display_name }) => {
-        let { battles = 0, marbles = 0, baskets = 0 } = acc.get(name) ?? {};
+        let {
+          battles = 0,
+          marbles = 0,
+          baskets = 0,
+          duels = 0,
+        } = acc.get(name) ?? {};
 
         if (type === MarblesVictoryType) {
           marbles++;
@@ -35,9 +42,18 @@
           baskets++;
         } else if (type === BattleRoyaleVictoryType) {
           battles++;
+        } else if (type === DuelVictoryType) {
+          duels++;
         }
 
-        return acc.set(name, { name, display_name, marbles, baskets, battles });
+        return acc.set(name, {
+          name,
+          display_name,
+          marbles,
+          baskets,
+          battles,
+          duels,
+        });
       }, new Map<string, Player>())
       .values()
   ).sort(
@@ -66,6 +82,9 @@
         {/if}
         {#each new Array(player.baskets) as _}
           <span class="ball">🏀</span>
+        {/each}
+        {#each new Array(player.duels) as _}
+          <span class="ball">⚔️</span>
         {/each}
       </li>
     {/each}

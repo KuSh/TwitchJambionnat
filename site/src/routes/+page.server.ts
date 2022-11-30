@@ -2,6 +2,7 @@ import { env } from "$env/dynamic/private";
 import {
   BasketBallVictoryType,
   BattleRoyaleVictoryType,
+  DuelVictoryType,
   MarblesVictoryType,
   type Event,
 } from "$lib/types";
@@ -39,7 +40,11 @@ export const load = async () => {
   const startOfMonth = DateTime.local().startOf("month");
 
   const events = await db
-    .where("type", "in", [BattleRoyaleVictoryType, BasketBallVictoryType])
+    .where("type", "in", [
+      BattleRoyaleVictoryType,
+      BasketBallVictoryType,
+      DuelVictoryType,
+    ])
     .where("timestamp", ">=", startOfMonth.toJSDate())
     .get()
     .then(({ docs }) => docs.map(map));

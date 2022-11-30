@@ -12,6 +12,7 @@ const seedEvents = async () => {
     "battleroyale:poop",
     "basketball:victory",
     "marbles:victory",
+    "duel:victory",
   ];
 
   if (!FIRESTORE_EMULATOR_HOST) {
