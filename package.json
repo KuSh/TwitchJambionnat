@@ -17,10 +17,10 @@
     "start:functions": "yarn workspace functions run start",
     "start:site": "yarn workspace site run start",
     "start": "npm-run-all --parallel start:**",
-    "check": "yarn run check --workspaces --if-present",
-    "lint": "yarn run lint --workspaces --if-present",
-    "format": "yarn run format --workspaces --if-present",
-    "build": "yarn run build --workspaces --if-present"
+    "check": "yarn workspaces run check",
+    "lint": "yarn workspaces run lint",
+    "format": "yarn workspaces run format",
+    "build": "yarn workspaces run build"
   },
   "devDependencies": {
     "firebase-tools": "^11.8.0",
