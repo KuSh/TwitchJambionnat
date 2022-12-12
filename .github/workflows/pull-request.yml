@@ -33,6 +33,7 @@ jobs:
         with:
           cache: "yarn"
           cache-dependency-path: yarn.lock
+          node-version: 16
       - run: |
           yarn install --frozen-lockfile
           yarn run lint

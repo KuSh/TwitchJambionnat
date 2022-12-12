@@ -38,9 +38,20 @@ const EVENTS = [
   ]),
 ];
 
-const twitchGetUsers = async (
-  ids: Iterable<string>
-): Promise<{ login: string; display_name: string }[]> => {
+type TwitchUser = {
+  id: string;
+  login: string;
+  display_name: string;
+  type: string;
+  broadcaster_type: string;
+  description: string;
+  profile_image_url: string;
+  offline_image_url: string;
+  view_count: number;
+  email: string;
+  created_at: string;
+};
+const twitchGetUsers = async (ids: Iterable<string>): Promise<TwitchUser[]> => {
   const { TWITCH_ACCESS_TOKEN, TWITCH_CLIENT_ID } = process.env;
 
   const params = new URLSearchParams(
@@ -53,7 +64,7 @@ const twitchGetUsers = async (
       "Client-Id": `${TWITCH_CLIENT_ID}`,
     },
   })
-    .then((r) => r.json())
+    .then((r) => r.json() as Promise<{ data: TwitchUser[] }>)
     .then((b) => b.data);
 };
 

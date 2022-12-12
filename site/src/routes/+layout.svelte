@@ -43,6 +43,8 @@
       background-color: #004daa;
       color: #e8e6e3;
     }
+    /* Those styles are really used ! Don't remove them */
+    /* It's a false positive due to bad interactions between svelte and svelte-preprocess */
     html,
     body {
       background-color: #181a1b;
