@@ -2,9 +2,7 @@ import { logger, region } from "firebase-functions";
 import fetch from "node-fetch";
 
 export const onCreateEvent = region("europe-west1")
-  .runWith({
-    secrets: ["GITHUB_REPOSITORY", "GITHUB_TOKEN", "GITHUB_WORKFLOW"],
-  })
+  .runWith({ secrets: ["GITHUB_TOKEN"] })
   .firestore.document("events/{docId}")
   .onCreate(async (change) => {
     if (change.data().type !== "battleroyale:victory") return;
