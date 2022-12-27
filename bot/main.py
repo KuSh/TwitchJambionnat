@@ -9,7 +9,9 @@ from google.auth.credentials import AnonymousCredentials
 from google.cloud import firestore
 
 PATTERNS = {
-    "battleroyale:victory": r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$",
+    "battleroyale:victory": (
+        r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$"
+    ),
     "battleroyale:poop": r"^(?P<name>\w+) a gagné 5 dol-lards en mangeant du caca !$",
     "basketball:victory": r"^(?P<name>\w+) Victory \+150$",
 }
@@ -18,7 +20,7 @@ COMMAND_PATTERN = r"^!jambot (?P<event>br|marbles|duel) @?(?P<name>\w+)$"
 COMMAND_EVENTS = {
     "br": "battleroyale:victory",
     "marbles": "marbles:victory",
-    "duel": "duel:victory"
+    "duel": "duel:victory",
 }
 
 
