@@ -66,69 +66,59 @@
   <title>Stream Avatar Leaderboard</title>
 </svelte:head>
 
-<main class="container">
-  <img class="image" src={image} alt="" />
-  <h1 class="title">Stream Avatar Leaderboard</h1>
+<main
+  class="rounded-xl m-1 lg:m-auto lg:my-8 lg:max-w-4xl p-4 lg:p-8 bg-white dark:bg-white/5 drop-shadow-lg dark:drop-shadow-none"
+>
+  <img class="mx-auto" src={image} width="256" height="256" alt="" />
+  <h1 class="text-2xl font-semibold text-center my-8">
+    Stream Avatar Leaderboard
+  </h1>
 
-  <ol>
-    {#each players as player}
-      <li class="player">
-        <a href="https://www.twitch.tv/{player.name}">
-          {player.display_name}
-        </a>
-        <span class="points">: {points(player)}</span>
-        {#if player.marbles}
-          <span class="ball">🌕</span>
-        {/if}
-        {#each new Array(player.baskets) as _}
-          <span class="ball">🏀</span>
-        {/each}
-        {#each new Array(player.duels) as _}
-          <span class="ball">⚔️</span>
-        {/each}
-      </li>
-    {/each}
-  </ol>
-  <br />
-  Nombre de battles royale : {events
-    .filter(({ type }) => type === BattleRoyaleVictoryType)
-    .reduce((count) => count + 1, 0)}
+  <table class="w-full">
+    <thead>
+      <tr class="border-b-2 text-left">
+        <th class="px-2 text-right">#</th>
+        <th class="px-2">Nom</th>
+        <th class="px-2">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each players as player, i}
+        <tr
+          class="border-t even:bg-gray-50 dark:even:dark:bg-white/5 leading-8"
+        >
+          <td class="px-2 text-right">{i + 1}</td>
+          <td class="px-2">
+            <a
+              href="https://www.twitch.tv/{player.name}"
+              class="text-indigo-500 dark:text-blue-500 hover:underline"
+            >
+              {player.display_name}
+            </a>
+          </td>
+          <td class="px-2">
+            {points(player)}
+            {#if player.marbles}
+              {" "}<span class="text-sm">🌕</span>
+            {/if}
+            {#each new Array(player.baskets) as _}
+              {" "}<span class="text-sm">🏀</span>
+            {/each}
+            {#each new Array(player.duels) as _}
+              {" "}<span class="text-sm">⚔️</span>
+            {/each}
+          </td>
+        </tr>
+      {/each}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="text-center">
+          Nombre de battles royale : {events
+            .filter(({ type }) => type === BattleRoyaleVictoryType)
+            .reduce((count) => count + 1, 0)}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </main>
-
-<style>
-  .container {
-    margin: 0 var(--container-mx);
-    max-width: var(--container-max-w);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .image {
-    max-width: 100%;
-  }
-
-  .title {
-    text-align: center;
-  }
-
-  .player {
-    margin: 0.25rem 0;
-    font-size: 0;
-  }
-
-  .player::marker,
-  .player > * {
-    font-size: 1rem;
-  }
-
-  .points {
-    margin-right: 0.25rem;
-  }
-
-  .ball {
-    font-size: 0.875rem;
-    margin-left: 0.25rem;
-  }
-</style>
