@@ -12,7 +12,7 @@
       "firebase-debug.*.log"
     ],
     "source": "functions",
-    "runtime": "nodejs16"
+    "runtime": "nodejs18"
   },
   "emulators": {
     "firestore": {

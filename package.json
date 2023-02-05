@@ -9,7 +9,7 @@
   "homepage": "https://github.com/KuSh/Twitch-SA-Leaderboard#readme",
   "bugs": "https://github.com/KuSh/Twitch-SA-Leaderboard/issues",
   "engines": {
-    "node": "^16.11.0",
+    "node": "^18.12.0",
     "yarn": "^1.22.17"
   },
   "scripts": {

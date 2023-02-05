@@ -25,7 +25,7 @@ jobs:
         with:
           cache: "yarn"
           cache-dependency-path: yarn.lock
-          node-version: 16
+          node-version: 18
       - run: |
           yarn install --frozen-lockfile
           yarn workspace site build
