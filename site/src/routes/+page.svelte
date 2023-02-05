@@ -63,7 +63,7 @@
 </script>
 
 <svelte:head>
-  <title>Stream Avatar Leaderboard</title>
+  <title>Classement Stream Avatar</title>
 </svelte:head>
 
 <main
@@ -71,7 +71,7 @@
 >
   <img class="mx-auto" src={image} width="256" height="256" alt="" />
   <h1 class="text-2xl font-semibold text-center my-8">
-    Stream Avatar Leaderboard
+    Classement Stream Avatar
   </h1>
 
   <table class="w-full">
