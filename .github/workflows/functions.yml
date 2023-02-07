@@ -19,9 +19,8 @@ jobs:
           echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
         with:
-          cache: "yarn"
-          cache-dependency-path: yarn.lock
           node-version: 18
+          cache: "yarn"
       - run: |
           yarn install --frozen-lockfile
           yarn workspace functions run build
