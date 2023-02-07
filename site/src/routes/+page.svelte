@@ -63,16 +63,14 @@
 </script>
 
 <svelte:head>
-  <title>Stream Avatar Leaderboard</title>
+  <title>Classement jambionnat</title>
 </svelte:head>
 
 <main
   class="rounded-xl m-1 lg:m-auto lg:my-8 lg:max-w-4xl p-4 lg:p-8 bg-white dark:bg-white/5 drop-shadow-lg dark:drop-shadow-none"
 >
   <img class="mx-auto" src={image} width="256" height="256" alt="" />
-  <h1 class="text-2xl font-semibold text-center my-8">
-    Stream Avatar Leaderboard
-  </h1>
+  <h1 class="text-2xl font-semibold text-center my-8">Classement jambionnat</h1>
 
   <table class="w-full">
     <thead>
