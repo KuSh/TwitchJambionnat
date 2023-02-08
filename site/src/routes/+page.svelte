@@ -6,7 +6,7 @@
     DuelVictoryType,
     MarblesVictoryType,
   } from "$lib/types";
-  import type { PageServerData } from ".svelte-kit/types/src/routes/$types";
+  import type { PageServerData } from "./$types";
 
   type Player = {
     name: string;
