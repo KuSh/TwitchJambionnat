@@ -1,13 +1,11 @@
 {
+  "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
   "compilerOptions": {
+    "lib": ["es2022"],
     "module": "es2022",
-    "moduleResolution": "Node",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "lib",
+    "target": "es2022",
     "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "outDir": "lib"
   },
   "compileOnSave": true,
   "include": ["src"]
