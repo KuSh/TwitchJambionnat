@@ -70,10 +70,16 @@ const twitchGetUsers = async (ids: Iterable<string>): Promise<TwitchUser[]> => {
 
 const catchUp = async () => {
   const {
-    GOOGLE_APPLICATION_CREDENTIALS,
     FIRESTORE_EMULATOR_HOST,
     GCLOUD_PROJECT,
+    GOOGLE_APPLICATION_CREDENTIALS,
   } = process.env;
+  if (!GCLOUD_PROJECT || !GOOGLE_APPLICATION_CREDENTIALS) {
+    console.error(
+      "GCLOUD_PROJECT and/or GOOGLE_APPLICATION_CREDENTIALS are not defined"
+    );
+    process.exit(1);
+  }
 
   const users = await twitchGetUsers(EVENTS.map(({ name }) => name)).then((r) =>
     r.reduce(
@@ -89,12 +95,19 @@ const catchUp = async () => {
     display_name: users.get(name),
   }));
 
-  const db = await new Firestore({
-    projectId: GCLOUD_PROJECT,
-    keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
-    host: FIRESTORE_EMULATOR_HOST,
-    ssl: FIRESTORE_EMULATOR_HOST ? false : undefined,
-  }).collection("events");
+  const settings: FirebaseFirestore.Settings = FIRESTORE_EMULATOR_HOST
+    ? {
+        projectId: GCLOUD_PROJECT,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+        host: FIRESTORE_EMULATOR_HOST,
+        ssl: false,
+      }
+    : {
+        projectId: GCLOUD_PROJECT,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+      };
+
+  const db = new Firestore(settings).collection("events");
 
   await Promise.all(
     events.map((event) =>

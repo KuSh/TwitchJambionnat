@@ -5,7 +5,14 @@ import dotenv from "dotenv";
 const seedEvents = async () => {
   dotenv.config();
 
-  const { GCLOUD_PROJECT, FIRESTORE_EMULATOR_HOST } = process.env;
+  const { FIRESTORE_EMULATOR_HOST, GCLOUD_PROJECT } = process.env;
+
+  if (!FIRESTORE_EMULATOR_HOST || !GCLOUD_PROJECT) {
+    console.error(
+      "FIRESTORE_EMULATOR_HOST and/or GCLOUD_PROJECT are not defined"
+    );
+    process.exit(1);
+  }
 
   const TYPES = [
     "battleroyale:victory",
@@ -14,11 +21,6 @@ const seedEvents = async () => {
     "marbles:victory",
     "duel:victory",
   ];
-
-  if (!FIRESTORE_EMULATOR_HOST) {
-    console.error("FIRESTORE_EMULATOR_HOST is not defined");
-    process.exit(1);
-  }
 
   const db = new Firestore({
     projectId: GCLOUD_PROJECT,
