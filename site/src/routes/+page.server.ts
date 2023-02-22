@@ -25,17 +25,24 @@ const map = (doc: QueryDocumentSnapshot): Event => {
 
 export const load = async () => {
   const {
-    GOOGLE_APPLICATION_CREDENTIALS,
     FIRESTORE_EMULATOR_HOST,
     GCLOUD_PROJECT,
+    GOOGLE_APPLICATION_CREDENTIALS,
   } = env;
+  if (!GCLOUD_PROJECT || !GOOGLE_APPLICATION_CREDENTIALS) return { events: [] };
 
-  const db = new Firestore({
-    projectId: GCLOUD_PROJECT,
-    keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
-    host: FIRESTORE_EMULATOR_HOST,
-    ssl: FIRESTORE_EMULATOR_HOST ? false : undefined,
-  }).collection("events");
+  const settings: FirebaseFirestore.Settings = FIRESTORE_EMULATOR_HOST
+    ? {
+        projectId: GCLOUD_PROJECT,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+        host: FIRESTORE_EMULATOR_HOST,
+        ssl: false,
+      }
+    : {
+        projectId: GCLOUD_PROJECT,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+      };
+  const db = new Firestore(settings).collection("events");
 
   const startOfMonth = DateTime.local().startOf("month");
 
