@@ -1,4 +1,4 @@
-twitchio == 2.5.0
-python-dotenv == 0.21.1
+twitchio == 2.6.0
+python-dotenv == 1.0.0
 firebase-admin == 6.1.0
-google-cloud-firestore == 2.9.1
+google-cloud-firestore == 2.10.0
