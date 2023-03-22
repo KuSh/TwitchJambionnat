@@ -8,7 +8,7 @@ from firebase_admin import firestore as firebase_firestore
 from google.auth.credentials import AnonymousCredentials
 from google.cloud import firestore
 
-PATTERNS = {
+MESSAGE_PATTERNS = {
     "basketball:victory": r"^(?P<name>\w+) Victory \+150$",
     "battleroyale:victory": r"^(?P<name>\w+) has won the Battle Royale! \+ 70 dol-lards$",
     "battleroyale:poop": r"^(?P<name>\w+) a gagné 5 dol-lards en mangeant du caca !$",
@@ -22,12 +22,15 @@ COMMAND_EVENTS = {
     "marbles": "marbles:victory",
 }
 
+USER_ALIASES = {"jarvets": {
+    "name": "stephymanette", "display_name": "StephyManette"}}
+
 
 def find_event(content):
     """
     Return event type and user name if content correspond to pattern
     """
-    for event, pattern in PATTERNS.items():
+    for event, pattern in MESSAGE_PATTERNS.items():
         match = re.match(pattern, content)
         if match is not None:
             return event, match.group("name").lower()
@@ -72,15 +75,20 @@ class Bot(twitchio.Client):
             print(f"error: can't find twitch user '{name}'")
             return
 
+        event = {
+            "type": event,
+            "timestamp": message.timestamp,
+            "name": user.name,
+            "display_name": user.display_name,
+        }
+
+        # Handle renamed user
+        alias = USER_ALIASES.get(user.name)
+        if alias is not None:
+            event.update(**alias, path=user.name)
+
         # Add DB entry
-        db.collection("events").add(
-            {
-                "type": event,
-                "timestamp": message.timestamp,
-                "name": user.name,
-                "display_name": user.display_name,
-            }
-        )
+        db.collection("events").add(event)
 
 
 # Load .env environment variables

@@ -11,6 +11,7 @@
   type Player = {
     name: string;
     display_name: string;
+    path: string | undefined;
     marbles: number;
     baskets: number;
     battles: number;
@@ -28,7 +29,7 @@
 
   export let players: Player[] = Array.from(
     events
-      ?.reduce((acc, { type, name, display_name }) => {
+      ?.reduce((acc, { type, name, display_name, path }) => {
         let {
           battles = 0,
           marbles = 0,
@@ -49,6 +50,7 @@
         return acc.set(name, {
           name,
           display_name,
+          path,
           marbles,
           baskets,
           battles,
@@ -88,7 +90,7 @@
           <td class="px-2 text-right">{i + 1}</td>
           <td class="px-2">
             <a
-              href="https://www.twitch.tv/{player.name}"
+              href="https://www.twitch.tv/{player.path ?? player.name}"
               class="text-indigo-500 dark:text-blue-500 hover:underline"
             >
               {player.display_name}

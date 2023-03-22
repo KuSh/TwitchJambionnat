@@ -3,6 +3,7 @@ type BaseEvent<T> = {
   timestamp: number;
   name: string;
   display_name: string;
+  path?: string;
 };
 
 export const BattleRoyaleVictoryType = "battleroyale:victory";
