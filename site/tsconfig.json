@@ -6,7 +6,6 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "exactOptionalPropertyTypes": true,
-    "importsNotUsedAsValues": "error",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
@@ -18,6 +17,8 @@
     "resolveJsonModule": true,
     // Emit
     "sourceMap": true,
+    // Override deprecated option
+    "importsNotUsedAsValues": null,
     // JavaScript Support
     "allowJs": true,
     "checkJs": true,

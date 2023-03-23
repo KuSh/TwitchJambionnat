@@ -6,6 +6,10 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
+  rules: {
+    // Alternative to typescript deprecated importsNotUsedAsValues
+    "@typescript-eslint/consistent-type-imports": "error",
+  },
   plugins: ["@typescript-eslint"],
   ignorePatterns: ["*.cjs", "dist/**"],
   parserOptions: {

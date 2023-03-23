@@ -6,8 +6,12 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
+  rules: {
+    // Alternative to typescript deprecated importsNotUsedAsValues
+    "@typescript-eslint/consistent-type-imports": "error",
+  },
   plugins: ["svelte3", "@typescript-eslint"],
-  ignorePatterns: ["*.cjs"],
+  ignorePatterns: ["*.js", "*.cjs"],
   overrides: [{ files: ["*.svelte"], processor: "svelte3/svelte3" }],
   settings: {
     "svelte3/typescript": () => require("typescript"),

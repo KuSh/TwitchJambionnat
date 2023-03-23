@@ -5,7 +5,9 @@
     "module": "es2022",
     "target": "es2022",
     "sourceMap": true,
-    "outDir": "lib"
+    "outDir": "lib",
+    // Override deprecated option
+    "importsNotUsedAsValues": null
   },
   "compileOnSave": true,
   "include": ["src"]

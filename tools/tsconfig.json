@@ -1,6 +1,8 @@
 {
   "extends": "@tsconfig/node18-strictest-esm/tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    // Override deprecated option
+    "importsNotUsedAsValues": null
   }
 }

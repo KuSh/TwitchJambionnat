@@ -6,11 +6,8 @@ import {
   MarblesVictoryType,
   type Event,
 } from "$lib/types";
-import {
-  Firestore,
-  QueryDocumentSnapshot,
-  Timestamp,
-} from "@google-cloud/firestore";
+import type { QueryDocumentSnapshot, Timestamp } from "@google-cloud/firestore";
+import { Firestore } from "@google-cloud/firestore";
 import { DateTime } from "luxon";
 
 type EventDocument = Omit<Event, "timestamp"> & { timestamp: Timestamp };
