@@ -53,10 +53,13 @@ type TwitchUser = {
 };
 const twitchGetUsers = async (ids: Iterable<string>): Promise<TwitchUser[]> => {
   const { TWITCH_ACCESS_TOKEN, TWITCH_CLIENT_ID } = process.env;
+  if (!TWITCH_ACCESS_TOKEN)
+    throw ReferenceError("TWITCH_ACCESS_TOKEN not defined");
+  if (!TWITCH_CLIENT_ID) throw ReferenceError("TWITCH_CLIENT_ID not defined");
 
   const params = new URLSearchParams(
     Array.from(new Set(ids)).map((id) => ["login", id] as [string, string])
-  );
+  ).toString();
 
   return fetch(`https://api.twitch.tv/helix/users?${params}`, {
     headers: {
@@ -116,4 +119,4 @@ const catchUp = async () => {
   );
 };
 
-catchUp();
+void catchUp();

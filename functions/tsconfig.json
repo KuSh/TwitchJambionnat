@@ -10,5 +10,5 @@
     "importsNotUsedAsValues": null
   },
   "compileOnSave": true,
-  "include": ["src"]
+  "include": ["src", "global.d.ts"]
 }

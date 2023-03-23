@@ -54,4 +54,4 @@ const seedEvents = async () => {
   );
 };
 
-seedEvents();
+void seedEvents();

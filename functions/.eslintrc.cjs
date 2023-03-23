@@ -4,6 +4,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
   ],
   rules: {
@@ -16,6 +17,7 @@ module.exports = {
   ],
   parserOptions: {
     sourceType: "module",
+    project: ["./tsconfig.json"],
   },
   env: {
     es6: true,
