@@ -22,8 +22,7 @@ COMMAND_EVENTS = {
     "marbles": "marbles:victory",
 }
 
-USER_ALIASES = {"jarvets": {
-    "name": "stephymanette", "display_name": "StephyManette"}}
+USER_ALIASES = {"jarvets": {"name": "stephymanette", "display_name": "StephyManette"}}
 
 
 def find_event(content):
