@@ -1,4 +1,5 @@
 import { logger, region } from "firebase-functions";
+import { Agent } from "https";
 import fetch from "node-fetch";
 
 type BaseEvent<T> = {
@@ -24,6 +25,8 @@ export type Event =
   | BasketBallVictory
   | DuelVictory;
 
+const agent = new Agent({ keepAlive: true });
+
 export const onCreateEvent = region("europe-west1")
   .runWith({ secrets: ["GITHUB_TOKEN"] })
   .firestore.document("events/{docId}")
@@ -38,13 +41,14 @@ export const onCreateEvent = region("europe-west1")
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/${GITHUB_WORKFLOW}/dispatches`,
       {
-        method: "POST",
+        agent,
         body: JSON.stringify({ ref: "main" }),
         headers: {
           Accept: "application/vnd.github+json",
           Authorization: `Bearer ${GITHUB_TOKEN}`,
           "Content-Type": "application/json",
         },
+        method: "POST",
       }
     );
 
