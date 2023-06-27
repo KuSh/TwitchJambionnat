@@ -1,4 +1,5 @@
-import { logger, region } from "firebase-functions";
+import { logger } from "firebase-functions/v2";
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { Agent } from "https";
 import fetch from "node-fetch";
 
@@ -27,14 +28,22 @@ export type Event =
 
 const agent = new Agent({ keepAlive: true });
 
-export const onCreateEvent = region("europe-west1")
-  .runWith({ secrets: ["GITHUB_TOKEN"] })
-  .firestore.document("events/{docId}")
-  .onCreate(async (change) => {
+export const onEventCreated = onDocumentCreated(
+  {
+    document: "events/{docId}",
+    region: "europe-west1",
+    secrets: ["GITHUB_REPOSITORY", "GITHUB_TOKEN", "GITHUB_WORKFLOW"],
+  },
+  async (event) => {
     const { GITHUB_REPOSITORY, GITHUB_TOKEN, GITHUB_WORKFLOW } = process.env;
-    const data = change.data();
 
-    if ("type" in data === false || data["type"] !== "battleroyale:victory") {
+    const data = event.data?.data();
+
+    if (
+      !data ||
+      "type" in data === false ||
+      data["type"] !== "battleroyale:victory"
+    ) {
       return;
     }
 
@@ -61,4 +70,5 @@ export const onCreateEvent = region("europe-west1")
     }
 
     return true;
-  });
+  }
+);
