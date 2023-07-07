@@ -11,7 +11,7 @@ void (async () => {
   } = process.env;
   if (!GCLOUD_PROJECT || !GOOGLE_APPLICATION_CREDENTIALS) {
     console.error(
-      "GCLOUD_PROJECT and/or GOOGLE_APPLICATION_CREDENTIALS are not defined"
+      "GCLOUD_PROJECT and/or GOOGLE_APPLICATION_CREDENTIALS are not defined",
     );
     process.exit(1);
   }
@@ -41,7 +41,7 @@ void (async () => {
         name: "uaeruz",
         display_name: "Uaeruz",
         path: "uaeruz_",
-      })
-    )
+      }),
+    ),
   );
 })();

@@ -58,17 +58,17 @@ export const onEventCreated = onDocumentCreated(
           "Content-Type": "application/json",
         },
         method: "POST",
-      }
+      },
     );
 
     if (!response.ok) {
       logger.error(
         `Status ${response.url} on ${response.status}`,
-        await response.json()
+        await response.json(),
       );
       return false;
     }
 
     return true;
-  }
+  },
 );

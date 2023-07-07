@@ -9,7 +9,7 @@ const seedEvents = async () => {
 
   if (!FIRESTORE_EMULATOR_HOST || !GCLOUD_PROJECT) {
     console.error(
-      "FIRESTORE_EMULATOR_HOST and/or GCLOUD_PROJECT are not defined"
+      "FIRESTORE_EMULATOR_HOST and/or GCLOUD_PROJECT are not defined",
     );
     process.exit(1);
   }
@@ -46,11 +46,11 @@ const seedEvents = async () => {
           ? faker.date.recent(1)
           : faker.date.between(
               new Date().getTime() - 60 * 86400000,
-              new Date().getTime() + 30 * 86400000
+              new Date().getTime() + 30 * 86400000,
             );
       const { name, display_name } = faker.helpers.arrayElement(USERS);
       return events.add({ type, timestamp, name, display_name });
-    })
+    }),
   );
 };
 

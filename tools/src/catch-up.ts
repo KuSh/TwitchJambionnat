@@ -7,7 +7,7 @@ dotenv.config();
 
 const events = (
   type: string,
-  events: { name: string; timestamp: Date }[]
+  events: { name: string; timestamp: Date }[],
 ): { type: string; name: string; timestamp: Date }[] =>
   events.map(({ name, timestamp }) => ({ type, name, timestamp }));
 
@@ -58,7 +58,7 @@ const twitchGetUsers = async (ids: Iterable<string>): Promise<TwitchUser[]> => {
   if (!TWITCH_CLIENT_ID) throw ReferenceError("TWITCH_CLIENT_ID not defined");
 
   const params = new URLSearchParams(
-    Array.from(new Set(ids)).map((id) => ["login", id] as [string, string])
+    Array.from(new Set(ids)).map((id) => ["login", id] as [string, string]),
   ).toString();
 
   return fetch(`https://api.twitch.tv/helix/users?${params}`, {
@@ -79,7 +79,7 @@ const catchUp = async () => {
   } = process.env;
   if (!GCLOUD_PROJECT || !GOOGLE_APPLICATION_CREDENTIALS) {
     console.error(
-      "GCLOUD_PROJECT and/or GOOGLE_APPLICATION_CREDENTIALS are not defined"
+      "GCLOUD_PROJECT and/or GOOGLE_APPLICATION_CREDENTIALS are not defined",
     );
     process.exit(1);
   }
@@ -87,8 +87,8 @@ const catchUp = async () => {
   const users = await twitchGetUsers(EVENTS.map(({ name }) => name)).then((r) =>
     r.reduce(
       (acc, { login, display_name }) => acc.set(login, display_name),
-      new Map<string, string>()
-    )
+      new Map<string, string>(),
+    ),
   );
 
   const events = EVENTS.map(({ type, name, timestamp }) => ({
@@ -114,8 +114,8 @@ const catchUp = async () => {
 
   await Promise.all(
     events.map((event) =>
-      db.add(event).then(() => console.log(JSON.stringify(event), "added!"))
-    )
+      db.add(event).then(() => console.log(JSON.stringify(event), "added!")),
+    ),
   );
 };
 
