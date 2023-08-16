@@ -1,11 +1,5 @@
 import { env } from "$env/dynamic/private";
-import {
-  BasketBallVictoryType,
-  BattleRoyaleVictoryType,
-  DuelVictoryType,
-  MarblesVictoryType,
-  type Event,
-} from "$lib/types";
+import { CURRENT_TYPES, DELAYED_TYPES, type Event } from "$lib/types";
 import type { QueryDocumentSnapshot, Timestamp } from "@google-cloud/firestore";
 import { Firestore } from "@google-cloud/firestore";
 import { DateTime } from "luxon";
@@ -43,22 +37,18 @@ export const load = async () => {
 
   const startOfMonth = DateTime.local().startOf("month");
 
-  const events = await db
-    .where("type", "in", [
-      BattleRoyaleVictoryType,
-      BasketBallVictoryType,
-      DuelVictoryType,
-    ])
+  const current = await db
+    .where("type", "in", CURRENT_TYPES)
     .where("timestamp", ">=", startOfMonth.toJSDate())
     .get()
     .then(({ docs }) => docs.map(map));
 
-  const marbles = await db
-    .where("type", "==", MarblesVictoryType)
+  const delayed = await db
+    .where("type", "in", DELAYED_TYPES)
     .where("timestamp", ">=", startOfMonth.minus({ months: 1 }).toJSDate())
     .where("timestamp", "<", startOfMonth.toJSDate())
     .get()
     .then(({ docs }) => docs.map(map));
 
-  return { events: events.concat(marbles) };
+  return { events: current.concat(delayed) };
 };

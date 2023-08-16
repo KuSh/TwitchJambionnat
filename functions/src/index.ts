@@ -3,28 +3,13 @@ import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { Agent } from "https";
 import fetch from "node-fetch";
 
-type BaseEvent<T> = {
-  type: T;
-  timestamp: number;
-  name: string;
-  display_name: string;
-};
-
-export const BattleRoyaleVictoryType = "battleroyale:victory";
-export const MarblesVictoryType = "marbles:victory";
-export const BasketBallVictoryType = "basketball:victory";
-export const DuelVictoryType = "duel:victory";
-
-export type BattleRoyaleVictory = BaseEvent<typeof BattleRoyaleVictoryType>;
-export type MarblesVictory = BaseEvent<typeof MarblesVictoryType>;
-export type BasketBallVictory = BaseEvent<typeof BasketBallVictoryType>;
-export type DuelVictory = BaseEvent<typeof DuelVictoryType>;
-
-export type Event =
-  | BattleRoyaleVictory
-  | MarblesVictory
-  | BasketBallVictory
-  | DuelVictory;
+const TRIGGERING_EVENTS = [
+  "basketball:victory",
+  "battleroyale:poop",
+  "battleroyale:victory",
+  "duel:victory",
+  "garticshow:victory",
+];
 
 const agent = new Agent({ keepAlive: true });
 
@@ -42,7 +27,7 @@ export const onEventCreated = onDocumentCreated(
     if (
       !data ||
       "type" in data === false ||
-      data["type"] !== "battleroyale:victory"
+      !TRIGGERING_EVENTS.includes(data["type"])
     ) {
       return;
     }
@@ -58,17 +43,17 @@ export const onEventCreated = onDocumentCreated(
           "Content-Type": "application/json",
         },
         method: "POST",
-      },
+      }
     );
 
     if (!response.ok) {
       logger.error(
         `Status ${response.url} on ${response.status}`,
-        await response.json(),
+        await response.json()
       );
       return false;
     }
 
     return true;
-  },
+  }
 );

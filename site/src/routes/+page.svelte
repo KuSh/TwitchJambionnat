@@ -2,20 +2,41 @@
   import image from "$lib/assets/jambionnat-256.png";
   import {
     BasketBallVictoryType,
+    BattleRoyalePoopType,
     BattleRoyaleVictoryType,
     DuelVictoryType,
+    GarticShowVictoryType,
     MarblesVictoryType,
+    SkyjoVictoryType,
   } from "$lib/types";
   import type { PageServerData } from "./$types";
+
+  type SCORES = {
+    baskets: number;
+    battles: number;
+    duels: number;
+    gartics: number;
+    marbles: number;
+    poops: number;
+    skyjos: number;
+  };
+
+  // ref: https://github.com/Microsoft/TypeScript/issues/13298#issuecomment-707369176
+  type ValueTuple<O, T extends keyof O = keyof O> = (
+    (T extends any ? (t: T) => T : never) extends infer U
+      ? (U extends any ? (u: U) => any : never) extends (v: infer V) => any
+        ? V
+        : never
+      : never
+  ) extends (_: any) => infer W
+    ? [...ValueTuple<O, Exclude<T, W>>, O[Extract<W, keyof O>]]
+    : [];
 
   type Player = {
     name: string;
     display_name: string;
     path: string | undefined;
-    marbles: number;
-    baskets: number;
-    battles: number;
-    duels: number;
+    scores: ValueTuple<SCORES>;
   };
 </script>
 
@@ -24,37 +45,62 @@
 
   export let events = data.events;
 
-  export const points = ({ battles, baskets, marbles, duels }: Player) =>
-    battles + duels + 3 * baskets + 5 * marbles;
+  export const points = ({
+    scores: [baskets, battles, duels, gartics, marbles, _, skyjos],
+  }: Player) => {
+    return battles + duels + 3 * (baskets + gartics) + 5 * (marbles + skyjos);
+  };
+
+  export const BASKETS_INDEX = 0;
+  export const BATTLES_INDEX = 1;
+  export const DUELS_INDEX = 2;
+  export const GARTICS_INDEX = 3;
+  export const MARBLES_INDEX = 4;
+  export const POOPS_INDEX = 5;
+  export const SKYJOS_INDEX = 6;
 
   export let players: Player[] = Array.from(
     events
       ?.reduce((acc, { type, name, display_name, path }) => {
-        let {
-          battles = 0,
-          marbles = 0,
+        let [
           baskets = 0,
+          battles = 0,
           duels = 0,
-        } = acc.get(name) ?? {};
+          gartics = 0,
+          marbles = 0,
+          poops = 0,
+          skyjos = 0,
+        ] = acc.get(name)?.scores ?? [];
 
-        if (type === MarblesVictoryType) {
-          marbles++;
-        } else if (type === BasketBallVictoryType) {
-          baskets++;
-        } else if (type === BattleRoyaleVictoryType) {
-          battles++;
-        } else if (type === DuelVictoryType) {
-          duels++;
+        switch (type) {
+          case BasketBallVictoryType:
+            baskets++;
+            break;
+          case BattleRoyalePoopType:
+            poops++;
+            break;
+          case BattleRoyaleVictoryType:
+            battles++;
+            break;
+          case DuelVictoryType:
+            duels++;
+            break;
+          case GarticShowVictoryType:
+            gartics++;
+            break;
+          case MarblesVictoryType:
+            marbles++;
+            break;
+          case SkyjoVictoryType:
+            skyjos++;
+            break;
         }
 
         return acc.set(name, {
           name,
           display_name,
           path,
-          marbles,
-          baskets,
-          battles,
-          duels,
+          scores: [baskets, battles, duels, gartics, marbles, poops, skyjos],
         });
       }, new Map<string, Player>())
       .values()
@@ -77,9 +123,10 @@
   <table class="w-full">
     <thead>
       <tr class="border-b-2 text-left">
-        <th class="px-2 text-right">#</th>
+        <th class="text-right">#</th>
         <th class="px-2">Nom</th>
-        <th class="px-2">Score</th>
+        <th>Score</th>
+        <th class="text-center">💩</th>
       </tr>
     </thead>
     <tbody>
@@ -87,7 +134,7 @@
         <tr
           class="border-t even:bg-gray-50 dark:even:dark:bg-white/5 leading-8"
         >
-          <td class="px-2 text-right">{i + 1}</td>
+          <td class="text-right">{i + 1}</td>
           <td class="px-2">
             <a
               href="https://www.twitch.tv/{player.path ?? player.name}"
@@ -96,17 +143,28 @@
               {player.display_name}
             </a>
           </td>
-          <td class="px-2">
+          <td>
             {points(player)}
-            {#if player.marbles}
+            {#if player.scores[MARBLES_INDEX]}
               {" "}<span class="text-sm">🌕</span>
             {/if}
-            {#each new Array(player.baskets) as _}
+            {#each new Array(player.scores[BASKETS_INDEX]) as _}
               {" "}<span class="text-sm">🏀</span>
             {/each}
-            {#each new Array(player.duels) as _}
+            {#each new Array(player.scores[DUELS_INDEX]) as _}
               {" "}<span class="text-sm">⚔️</span>
             {/each}
+            {#each new Array(player.scores[SKYJOS_INDEX]) as _}
+              {" "}<span class="text-sm">🎴</span>
+            {/each}
+            {#each new Array(player.scores[GARTICS_INDEX]) as _}
+              {" "}<span class="text-sm">✏️</span>
+            {/each}
+          </td>
+          <td class="text-center">
+            {#if player.scores[POOPS_INDEX]}
+              {player.scores[POOPS_INDEX]}
+            {/if}
           </td>
         </tr>
       {/each}

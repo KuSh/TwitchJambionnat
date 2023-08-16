@@ -9,17 +9,21 @@ const seedEvents = async () => {
 
   if (!FIRESTORE_EMULATOR_HOST || !GCLOUD_PROJECT) {
     console.error(
-      "FIRESTORE_EMULATOR_HOST and/or GCLOUD_PROJECT are not defined",
+      "FIRESTORE_EMULATOR_HOST and/or GCLOUD_PROJECT are not defined"
     );
     process.exit(1);
   }
 
   const TYPES = [
+    // Main event
     "battleroyale:victory",
-    "battleroyale:poop",
+    // Other events
     "basketball:victory",
-    "marbles:victory",
+    "battleroyale:poop",
     "duel:victory",
+    "garticshow:victory",
+    "marbles:victory",
+    "skyjo:victory",
   ];
 
   const db = new Firestore({
@@ -43,14 +47,14 @@ const seedEvents = async () => {
       const type = i % 3 ? TYPES[0] : faker.helpers.arrayElement(TYPES);
       const timestamp =
         i % 3
-          ? faker.date.recent(1)
-          : faker.date.between(
-              new Date().getTime() - 60 * 86400000,
-              new Date().getTime() + 30 * 86400000,
-            );
+          ? faker.date.recent({ days: 1 })
+          : faker.date.between({
+              from: new Date().getTime() - 60 * 86400000,
+              to: new Date().getTime() + 30 * 86400000,
+            });
       const { name, display_name } = faker.helpers.arrayElement(USERS);
       return events.add({ type, timestamp, name, display_name });
-    }),
+    })
   );
 };
 
