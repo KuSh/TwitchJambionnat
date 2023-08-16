@@ -111,14 +111,26 @@
 </script>
 
 <svelte:head>
-  <title>Classement jambionnat</title>
+  <title>Classement Jambionnat</title>
 </svelte:head>
 
 <main
   class="rounded-xl m-1 lg:m-auto lg:my-8 lg:max-w-4xl p-4 lg:p-8 bg-white dark:bg-white/5 drop-shadow-lg dark:drop-shadow-none"
 >
   <img class="mx-auto" src={image} width="197" height="256" alt="" />
-  <h1 class="text-2xl font-semibold text-center my-8">Classement jambionnat</h1>
+  <nav class="uppercase my-8 flex flex-col">
+    <a
+      class="text-indigo-500 dark:text-blue-500 hover:underline w-min mx-auto"
+      href="rules">Règles</a
+    >
+    <!--
+    <a
+      class="text-indigo-500 dark:text-blue-500 hover:underline w-max mx-auto"
+      href="description">Présentation des jeux</a
+    >
+    -->
+  </nav>
+  <h1 class="text-2xl font-semibold text-center my-8">Classement Jambionnat</h1>
 
   <table class="w-full">
     <thead>
