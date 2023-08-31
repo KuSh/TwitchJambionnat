@@ -50,11 +50,12 @@
       </li>
       <li>
         Skyjo : Trois viewers s'affrontent sur un jeu de cartes tout simple
-        (voir règles du jeu sur ce <a
+        (voir <a
           href="http://jeuxstrategie1.free.fr/jeu_skyjo/regle.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-indigo-500 dark:text-blue-500 hover:underline">site</a
+          class="text-indigo-500 dark:text-blue-500 hover:underline"
+          >les règles du jeu</a
         >). Les participants doivent faire des choix stratégiques (utiliser une
         carte de la défausse ou de la pioche, faire un combo etc) afin d'avoir
         le moins de points en fin de manche. La personne qui remporte la manche
