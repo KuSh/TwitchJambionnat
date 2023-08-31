@@ -14,7 +14,6 @@ MESSAGE_PATTERNS = {
     "battleroyale:poop": r"^(?P<name>\w+) a gagné 5 dol-lards en mangeant du caca !$",
 }
 
-COMMAND_PATTERN = r"^!jambot (?P<event>br|duel|gartic|marbles|skyjo) @?(?P<name>\w+)$"
 COMMAND_EVENTS = {
     "basket": "basketball:victory",
     "br": "battleroyale:victory",
@@ -23,6 +22,10 @@ COMMAND_EVENTS = {
     "marbles": "marbles:victory",
     "skyjo": "skyjo:victory",
 }
+
+COMMAND_PATTERN = (
+    r"^!jambot (?P<event>" + "|".join(COMMAND_EVENTS.keys()) + ") @?(?P<name>\w+)$"
+)
 
 USER_ALIASES = {
     "jarvets": {"name": "stephymanette", "display_name": "StephyManette"},
