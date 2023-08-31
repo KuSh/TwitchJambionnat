@@ -123,12 +123,10 @@
       class="text-indigo-500 dark:text-blue-500 hover:underline w-min mx-auto"
       href="rules">Règles</a
     >
-    <!--
     <a
       class="text-indigo-500 dark:text-blue-500 hover:underline w-max mx-auto"
       href="description">Présentation des jeux</a
     >
-    -->
   </nav>
   <h1 class="text-2xl font-semibold text-center my-8">Classement Jambionnat</h1>
 
