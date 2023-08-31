@@ -60,11 +60,16 @@
         le moins de points en fin de manche. La personne qui remporte la manche
         gagne cinq points pour le Jambionnat du mois suivant.
       </li>
+      <li>
+        Cacas volants : Périodiquement, un petit caca volant apparaîtra
+        au-dessus des Avatars. Votre but est de l'attraper en utilisant les
+        commandes d'action (jump ou sling) de l'extension StreamAvatars dispo à
+        droite de l'écran du lecteur Twitch. Chaque caca attrapé rapporte un
+        point qui ne compte pas pour le Jambionnat mais pour un score à part. En
+        fin de mois, si vous avez attrapé plus de cacas que tout le monde et si
+        vous n'avez pas remporté le Jambionnat mensuel, vous gagnez une commande
+        à votre gloire de coprophage.
+      </li>
     </ul>
-    <p>
-      Note : manger des cacas avec les Avatars ne vous rapportera pas de points
-      pour le Jambionnat, mais votre score de coprophage sera indiqué dans le
-      leaderboard. Pour la gloire et l'honneur d'avoir mangé plein de cacas.
-    </p>
   </section>
 </main>
