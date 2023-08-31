@@ -34,9 +34,21 @@
         rel="noopener noreferrer"
         class="text-indigo-500 dark:text-blue-500 hover:underline">Discord</a
       >
-      (section "Brutalpolo" > salon "VOD et Planning"), dans l'onglet "Programme"
-      de la page Twitch et sur Twitter. Le planning est actualisé chaque dimanche,
-      pour la semaine suivante.
+      (section "Brutalpolo" &gt; salon "VOD et Planning"), dans l'onglet "Programme"
+      de la page
+      <a
+        href="https://www.twitch.tv/brutalpolo/schedule"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-indigo-500 dark:text-blue-500 hover:underline">Twitch</a
+      >
+      et sur
+      <a
+        href="https://twitter.com/brutalpolo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-indigo-500 dark:text-blue-500 hover:underline">Twitter</a
+      >. Le planning est actualisé chaque dimanche, pour la semaine suivante.
     </p>
     <p>
       Note : en cas d'égalité entre deux personnes, elles seront départagées
