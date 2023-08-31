@@ -50,11 +50,15 @@
       </li>
       <li>
         Skyjo : Trois viewers s'affrontent sur un jeu de cartes tout simple
-        (voir règles du jeu sur ce site). Les participants doivent faire des
-        choix stratégiques (utiliser une carte de la défausse ou de la pioche,
-        faire un combo etc) afin d'avoir le moins de points en fin de manche. La
-        personne qui remporte la manche gagne cinq points pour le Jambionnat du
-        mois suivant.
+        (voir règles du jeu sur ce <a
+          href="http://jeuxstrategie1.free.fr/jeu_skyjo/regle.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-indigo-500 dark:text-blue-500 hover:underline">site</a
+        >). Les participants doivent faire des choix stratégiques (utiliser une
+        carte de la défausse ou de la pioche, faire un combo etc) afin d'avoir
+        le moins de points en fin de manche. La personne qui remporte la manche
+        gagne cinq points pour le Jambionnat du mois suivant.
       </li>
     </ul>
     <p>
