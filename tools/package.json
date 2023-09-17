@@ -8,7 +8,7 @@
     "build": "tsc",
     "check": "tsc --noEmit",
     "lint": "prettier --check . && eslint .",
-    "format": "prettxier --write .",
+    "format": "prettier --write .",
     "seed:events": "tsc --build && node dist/seed-events.js",
     "catchup": "tsc --build && node dist/catch-up.js",
     "rewrite": "tsc --build && node dist/rewrite.js"
