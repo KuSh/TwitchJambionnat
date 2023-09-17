@@ -16,16 +16,16 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@tsconfig/esm": "^1.0.4",
-    "@tsconfig/strictest": "^2.0.1",
-    "@types/luxon": "^3.3.1",
-    "@types/node": "^18.17.1",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "@typescript-eslint/parser": "^6.2.0",
+    "@tsconfig/strictest": "^2.0.2",
+    "@types/luxon": "^3.3.2",
+    "@types/node": "^18.17.17",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "dotenv": "^16.3.1",
-    "eslint": "^8.45.0",
-    "luxon": "^3.3.0",
+    "eslint": "^8.49.0",
+    "luxon": "^3.4.3",
     "node-fetch": "^3.3.2",
-    "prettier": "^3.0.0",
-    "typescript": "^5.1.6"
+    "prettier": "^3.0.3",
+    "typescript": "^5.2.2"
   }
 }

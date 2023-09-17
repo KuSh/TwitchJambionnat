@@ -3,13 +3,32 @@ import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { Agent } from "https";
 import fetch from "node-fetch";
 
-const TRIGGERING_EVENTS = [
+type Type =
+  | "basketball:victory"
+  | "battleroyale:poop"
+  | "battleroyale:victory"
+  | "duel:victory"
+  | "garticshow:victory";
+
+const TRIGGERING_EVENTS: string[] = [
   "basketball:victory",
   "battleroyale:poop",
   "battleroyale:victory",
   "duel:victory",
   "garticshow:victory",
-];
+] satisfies Type[];
+
+interface Event {
+  type: Type;
+}
+const isEvent = (data: unknown): data is Event => {
+  if (!data) return false;
+  if (typeof data !== "object") return false;
+  if (!("type" in data)) return false;
+  const type = data["type"];
+  if (typeof type !== "string") return false;
+  return TRIGGERING_EVENTS.includes(type);
+};
 
 const agent = new Agent({ keepAlive: true });
 
@@ -22,13 +41,7 @@ export const onEventCreated = onDocumentCreated(
   async (event) => {
     const { GITHUB_REPOSITORY, GITHUB_TOKEN, GITHUB_WORKFLOW } = process.env;
 
-    const data = event.data?.data();
-
-    if (
-      !data ||
-      "type" in data === false ||
-      !TRIGGERING_EVENTS.includes(data["type"])
-    ) {
+    if (!isEvent(event.data?.data())) {
       return;
     }
 
