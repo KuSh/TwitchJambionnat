@@ -17,8 +17,6 @@
     "resolveJsonModule": true,
     // Emit
     "sourceMap": true,
-    // Override deprecated option
-    "importsNotUsedAsValues": null,
     // JavaScript Support
     "allowJs": true,
     "checkJs": true,

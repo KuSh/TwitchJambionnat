@@ -5,8 +5,6 @@
     "@tsconfig/esm"
   ],
   "compilerOptions": {
-    "outDir": "dist",
-    // Override deprecated option
-    "importsNotUsedAsValues": null
+    "outDir": "dist"
   }
 }
