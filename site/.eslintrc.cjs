@@ -5,21 +5,27 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:svelte/recommended",
     "prettier",
   ],
   rules: {
     // Alternative to typescript deprecated importsNotUsedAsValues
     "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
   },
-  plugins: ["svelte3", "@typescript-eslint"],
+  plugins: ["@typescript-eslint"],
   ignorePatterns: ["*.js", "*.cjs"],
-  overrides: [{ files: ["*.svelte"], processor: "svelte3/svelte3" }],
-  settings: {
-    "svelte3/typescript": () => require("typescript"),
-  },
+  overrides: [
+    {
+      files: ["*.svelte"],
+      parser: "svelte-eslint-parser",
+      parserOptions: { parser: "@typescript-eslint/parser" },
+    },
+  ],
   parserOptions: {
     sourceType: "module",
     ecmaVersion: 2020,
+    extraFileExtensions: [".svelte"],
     project: ["./tsconfig.json"],
   },
   env: {

@@ -22,6 +22,7 @@
   };
 
   // ref: https://github.com/Microsoft/TypeScript/issues/13298#issuecomment-707369176
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   type ValueTuple<O, T extends keyof O = keyof O> = (
     (T extends any ? (t: T) => T : never) extends infer U
       ? (U extends any ? (u: U) => any : never) extends (v: infer V) => any
@@ -31,6 +32,7 @@
   ) extends (_: any) => infer W
     ? [...ValueTuple<O, Exclude<T, W>>, O[Extract<W, keyof O>]]
     : [];
+  /* eslint-enable */
 
   type Player = {
     name: string;
