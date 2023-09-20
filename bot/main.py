@@ -77,9 +77,16 @@ class Bot(twitchio.Client):
             return
 
         # Retrieve user to get its display_name
-        user, *_ = await self.fetch_users([name])
+        user = None
+        try:
+            user, *_ = await self.fetch_users([name])
+        except:
+            pass
+
         if user is None:
-            print(f"error: can't find twitch user '{name}'")
+            print(
+                f"error: Can't find twitch user '{name}'. Triggered by message '{message.content}'"
+            )
             return
 
         event = {
