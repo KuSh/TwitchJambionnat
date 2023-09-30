@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker/locale/fr";
-import { Firestore } from "@google-cloud/firestore";
 import dotenv from "dotenv";
+import { Firestore } from "firebase-admin/firestore";
+import { BattleRoyaleVictoryType, DELAYED_TYPES, INSTANT_TYPES } from "./types";
 
 const seedEvents = async () => {
   dotenv.config();
@@ -14,17 +15,8 @@ const seedEvents = async () => {
     process.exit(1);
   }
 
-  const TYPES = [
-    // Main event
-    "battleroyale:victory",
-    // Other events
-    "basketball:victory",
-    "battleroyale:poop",
-    "duel:victory",
-    "garticshow:victory",
-    "marbles:victory",
-    "skyjo:victory",
-  ];
+  const TYPES = INSTANT_TYPES.concat(DELAYED_TYPES);
+  const BR_INDEX = TYPES.indexOf(BattleRoyaleVictoryType);
 
   const db = new Firestore({
     projectId: GCLOUD_PROJECT,
@@ -44,7 +36,7 @@ const seedEvents = async () => {
     Array.from({
       length: Math.ceil(300 + Math.random() * 50),
     }).map((_, i) => {
-      const type = i % 3 ? TYPES[0] : faker.helpers.arrayElement(TYPES);
+      const type = i % 3 ? TYPES[BR_INDEX] : faker.helpers.arrayElement(TYPES);
       const timestamp =
         i % 3
           ? faker.date.recent({ days: 1 })

@@ -7,24 +7,29 @@
   "scripts": {
     "build": "tsc",
     "check": "tsc --noEmit",
-    "lint": "prettier --check . && eslint .",
+    "clean": "node -e \"fs.rmSync('dist', {force:true,recursive:true})\"",
     "format": "prettier --write .",
-    "seed:events": "tsc --build && node dist/seed-events.js",
-    "catchup": "tsc --build && node dist/catch-up.js",
-    "rewrite": "tsc --build && node dist/rewrite.js"
+    "lint": "prettier --check . && eslint .",
+    "seed:events": "tsc && node dist/seed-events.js",
+    "catchup": "tsc && node dist/catch-up.js",
+    "create-stats": "tsc && node dist/create-stats.js",
+    "rewrite": "tsc && node dist/rewrite.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.1.0",
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^11.11.0",
+    "luxon": "^3.4.3",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.1.0",
     "@tsconfig/esm": "^1.0.4",
     "@tsconfig/strictest": "^2.0.2",
     "@types/luxon": "^3.3.2",
     "@types/node": "^18.18.1",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
-    "dotenv": "^16.3.1",
     "eslint": "^8.50.0",
-    "luxon": "^3.4.3",
-    "node-fetch": "^3.3.2",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   }

@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import image from "$lib/assets/jambionnat-256.png";
+  import type { Player as BasePlayer, Stats } from "$lib/types";
   import {
     BasketBallVictoryType,
     BattleRoyalePoopType,
@@ -11,115 +12,41 @@
   } from "$lib/types";
   import type { PageServerData } from "./$types";
 
-  type POINTS = {
-    baskets: number;
-    battles: number;
-    duels: number;
-    gartics: number;
-    marbles: number;
-    poops: number;
-    skyjos: number;
-  };
-
-  // ref: https://github.com/Microsoft/TypeScript/issues/13298#issuecomment-707369176
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  type ValueTuple<O, T extends keyof O = keyof O> = (
-    (T extends any ? (t: T) => T : never) extends infer U
-      ? (U extends any ? (u: U) => any : never) extends (v: infer V) => any
-        ? V
-        : never
-      : never
-  ) extends (_: any) => infer W
-    ? [...ValueTuple<O, Exclude<T, W>>, O[Extract<W, keyof O>]]
-    : [];
-  /* eslint-enable */
-
-  type Player = {
-    name: string;
-    display_name: string;
-    path: string | undefined;
+  interface Player extends BasePlayer {
     index: number;
     score: number;
-    points: ValueTuple<POINTS>;
-  };
+  }
 </script>
 
 <script lang="ts">
   export let data: PageServerData;
 
-  export let events = data.events;
+  export let stats = data.stats;
 
   export const score = ({
-    points: [baskets, battles, duels, gartics, marbles, _, skyjos],
-  }: Player) => {
+    "basketball:victory": baskets = 0,
+    "battleroyale:victory": battles = 0,
+    "duel:victory": duels = 0,
+    "garticshow:victory": gartics = 0,
+    "marbles:victory": marbles = 0,
+    "skyjo:victory": skyjos = 0,
+  }: Stats) => {
     return battles + duels + 3 * (baskets + gartics) + 5 * (marbles + skyjos);
   };
 
-  export const BASKETS_INDEX = 0;
-  export const BATTLES_INDEX = 1;
-  export const DUELS_INDEX = 2;
-  export const GARTICS_INDEX = 3;
-  export const MARBLES_INDEX = 4;
-  export const POOPS_INDEX = 5;
-  export const SKYJOS_INDEX = 6;
-
-  const players = events.reduce((acc, { type, name, display_name, path }) => {
-    let [
-      baskets = 0,
-      battles = 0,
-      duels = 0,
-      gartics = 0,
-      marbles = 0,
-      poops = 0,
-      skyjos = 0,
-    ] = acc.get(name)?.points ?? [];
-
-    switch (type) {
-      case BasketBallVictoryType:
-        baskets++;
-        break;
-      case BattleRoyalePoopType:
-        poops++;
-        break;
-      case BattleRoyaleVictoryType:
-        battles++;
-        break;
-      case DuelVictoryType:
-        duels++;
-        break;
-      case GarticShowVictoryType:
-        gartics++;
-        break;
-      case MarblesVictoryType:
-        marbles++;
-        break;
-      case SkyjoVictoryType:
-        skyjos++;
-        break;
-    }
-
-    return acc.set(name, {
-      name,
-      display_name,
-      path,
-      index: 0,
-      score: 0,
-      points: [baskets, battles, duels, gartics, marbles, poops, skyjos],
-    });
-  }, new Map<string, Player>());
-
-  export const scores = Array.from(players.values())
-    .map((player) => ({ ...player, score: score(player) }))
-    .sort(
-      (a, b) =>
-        b.score - a.score || a.display_name.localeCompare(b.display_name)
-    )
-    .reduce((scores, player, index) => {
-      return scores.set(player.score, [
-        ...(scores.get(player.score) ?? []),
-        { ...player, index },
-      ]);
-    }, new Map<number, [Player, ...Player[]]>());
+  export const scores =
+    data.players
+      ?.map((player) => ({ ...player, score: score(player) }))
+      .sort(
+        (a, b) =>
+          b.score - a.score || a.display_name.localeCompare(b.display_name)
+      )
+      .reduce((scores, player, index) => {
+        return scores.set(player.score, [
+          ...(scores.get(player.score) ?? []),
+          { ...player, index },
+        ]);
+      }, new Map<number, [Player, ...Player[]]>()) ?? [];
 </script>
 
 <svelte:head>
@@ -144,9 +71,7 @@
 
   <table class="w-full">
     <caption class="caption-bottom text-center">
-      Nombre de battles royale : {events
-        .filter(({ type }) => type === BattleRoyaleVictoryType)
-        .reduce((count) => count + 1, 0)}
+      Nombre de battles royale : {stats?.[BattleRoyaleVictoryType] ?? 0}
     </caption>
     <thead>
       <tr class="border-b-2 text-left">
@@ -182,25 +107,25 @@
             </td>
             <td>
               {score}
-              {#if player.points[MARBLES_INDEX]}
+              {#if player[MarblesVictoryType]}
                 {" "}<span class="text-sm">🌕</span>
               {/if}
-              {#each new Array(player.points[BASKETS_INDEX]) as _}
+              {#each new Array(player[BasketBallVictoryType] ?? 0) as _}
                 {" "}<span class="text-sm">🏀</span>
               {/each}
-              {#each new Array(player.points[DUELS_INDEX]) as _}
+              {#each new Array(player[DuelVictoryType] ?? 0) as _}
                 {" "}<span class="text-sm">⚔️</span>
               {/each}
-              {#each new Array(player.points[SKYJOS_INDEX]) as _}
+              {#each new Array(player[SkyjoVictoryType] ?? 0) as _}
                 {" "}<span class="text-sm">🎴</span>
               {/each}
-              {#each new Array(player.points[GARTICS_INDEX]) as _}
+              {#each new Array(player[GarticShowVictoryType] ?? 0) as _}
                 {" "}<span class="text-sm">✏️</span>
               {/each}
             </td>
             <td class="text-center">
-              {#if player.points[POOPS_INDEX]}
-                {player.points[POOPS_INDEX]}
+              {#if player[BattleRoyalePoopType]}
+                {player[BattleRoyalePoopType]}
               {/if}
             </td>
           </tr>

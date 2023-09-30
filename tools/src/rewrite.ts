@@ -1,5 +1,5 @@
-import { Firestore } from "@google-cloud/firestore";
 import dotenv from "dotenv";
+import { Firestore } from "firebase-admin/firestore";
 
 dotenv.config();
 

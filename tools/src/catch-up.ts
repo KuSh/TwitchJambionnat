@@ -1,5 +1,5 @@
-import { Firestore } from "@google-cloud/firestore";
 import dotenv from "dotenv";
+import { Firestore } from "firebase-admin/firestore";
 import { DateTime } from "luxon";
 import fetch from "node-fetch";
 

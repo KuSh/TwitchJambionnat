@@ -1,19 +1,25 @@
 {
-  "hosting": {
-    "target": "site",
-    "public": "site/build",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
-  },
-  "functions": {
-    "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log"
-    ],
-    "source": "functions",
-    "runtime": "nodejs18"
-  },
+  "hosting": [
+    {
+      "target": "site",
+      "public": "site/build",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    }
+  ],
+  "functions": [
+    {
+      "ignore": [
+        ".*",
+        "*.log",
+        "global.d.ts",
+        "node_modules",
+        "src",
+        "tsconfig.json"
+      ],
+      "source": "functions",
+      "runtime": "nodejs18"
+    }
+  ],
   "emulators": {
     "firestore": {
       "port": 8080

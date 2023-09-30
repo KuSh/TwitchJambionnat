@@ -1,18 +1,7 @@
 import { env } from "$env/dynamic/private";
-import { CURRENT_TYPES, DELAYED_TYPES, type Event } from "$lib/types";
-import type { QueryDocumentSnapshot, Timestamp } from "@google-cloud/firestore";
-import { Firestore } from "@google-cloud/firestore";
+import type { Player, Stats } from "$lib/types";
+import { Firestore } from "firebase-admin/firestore";
 import { DateTime } from "luxon";
-
-type EventDocument = Omit<Event, "timestamp"> & { timestamp: Timestamp };
-
-const map = (doc: QueryDocumentSnapshot): Event => {
-  const { timestamp, ...rest } = doc.data() as EventDocument;
-  return {
-    timestamp: timestamp.toMillis(),
-    ...rest,
-  };
-};
 
 export const load = async () => {
   const {
@@ -33,22 +22,21 @@ export const load = async () => {
         projectId: GCLOUD_PROJECT,
         keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
       };
-  const db = new Firestore(settings).collection("events");
+  const db = new Firestore(settings);
 
-  const startOfMonth = DateTime.local().startOf("month");
+  const month = DateTime.local().toISODate()!.slice(0, 7);
 
-  const current = await db
-    .where("type", "in", CURRENT_TYPES)
-    .where("timestamp", ">=", startOfMonth.toJSDate())
+  const stats = (await db
+    .doc(`stats/${month}`)
     .get()
-    .then(({ docs }) => docs.map(map));
+    .then((doc) => doc.data())) as Stats;
 
-  const delayed = await db
-    .where("type", "in", DELAYED_TYPES)
-    .where("timestamp", ">=", startOfMonth.minus({ months: 1 }).toJSDate())
-    .where("timestamp", "<", startOfMonth.toJSDate())
+  const players = (await db
+    .collection(`stats/${month}/players`)
     .get()
-    .then(({ docs }) => docs.map(map));
+    .then(({ docs }) =>
+      docs.map((doc) => ({ name: doc.id, ...doc.data() })),
+    )) as Player[];
 
-  return { events: current.concat(delayed) };
+  return { stats, players };
 };
