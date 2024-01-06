@@ -39,7 +39,7 @@
       ?.map((player) => ({ ...player, score: score(player) }))
       .sort(
         (a, b) =>
-          b.score - a.score || a.display_name.localeCompare(b.display_name)
+          b.score - a.score || a.display_name.localeCompare(b.display_name),
       )
       .reduce((scores, player, index) => {
         return scores.set(player.score, [

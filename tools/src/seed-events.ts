@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker/locale/fr";
 import dotenv from "dotenv";
 import { Firestore } from "firebase-admin/firestore";
-import { BattleRoyaleVictoryType, DELAYED_TYPES, INSTANT_TYPES } from "./types";
+import { BattleRoyaleVictoryType, DELAYED_TYPES, INSTANT_TYPES } from "./types.js";
 
 const seedEvents = async () => {
   dotenv.config();
