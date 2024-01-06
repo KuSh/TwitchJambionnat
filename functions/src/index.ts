@@ -102,6 +102,9 @@ const agent = new Agent({ keepAlive: true });
 export const launchWorkflow = async (event: Event) => {
   if (!INSTANT_TYPES.includes(event.type)) return true;
 
+  // Don't launch cd workflow if on emulator
+  if (process.env["FIRESTORE_EMULATOR_HOST"]) return true;
+
   const { GITHUB_REPOSITORY, GITHUB_TOKEN, GITHUB_WORKFLOW } = process.env;
 
   const response = await fetch(
