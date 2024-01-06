@@ -9,18 +9,22 @@ export const load = async () => {
     GCLOUD_PROJECT,
     GOOGLE_APPLICATION_CREDENTIALS,
   } = env;
-  if (!GCLOUD_PROJECT || !GOOGLE_APPLICATION_CREDENTIALS) return { events: [] };
+  if (
+    !GCLOUD_PROJECT ||
+    (!FIRESTORE_EMULATOR_HOST && !GOOGLE_APPLICATION_CREDENTIALS)
+  ) {
+    return { events: [] };
+  }
 
   const settings: FirebaseFirestore.Settings = FIRESTORE_EMULATOR_HOST
     ? {
         projectId: GCLOUD_PROJECT,
-        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
         host: FIRESTORE_EMULATOR_HOST,
         ssl: false,
       }
     : {
         projectId: GCLOUD_PROJECT,
-        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS!,
       };
   const db = new Firestore(settings);
 
