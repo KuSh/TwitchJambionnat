@@ -16,9 +16,11 @@ jobs:
       LANG: "fr_FR.UTF-8"
     steps:
       - uses: actions/checkout@v3
+      # TODO: Find a better way to depend on FIRESTORE_EMULATOR_HOST optional env variable
       - run: |
           GOOGLE_APPLICATION_CREDENTIALS="$(mktemp)"
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
+          echo "FIRESTORE_EMULATOR_HOST=" >> $GITHUB_ENV
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS" >> $GITHUB_ENV
           echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
       - uses: actions/setup-node@v3
