@@ -1,14 +1,14 @@
-import { env } from "$env/dynamic/private";
+import {
+  FIRESTORE_EMULATOR_HOST,
+  GCLOUD_PROJECT,
+  GOOGLE_APPLICATION_CREDENTIALS,
+} from "$env/static/private";
 import type { Player, Stats } from "$lib/types";
 import { Firestore } from "firebase-admin/firestore";
 import { DateTime } from "luxon";
+import type { PageServerLoad } from "./$types";
 
-export const load = async () => {
-  const {
-    FIRESTORE_EMULATOR_HOST,
-    GCLOUD_PROJECT,
-    GOOGLE_APPLICATION_CREDENTIALS,
-  } = env;
+export const load: PageServerLoad = async () => {
   if (
     !GCLOUD_PROJECT ||
     (!FIRESTORE_EMULATOR_HOST && !GOOGLE_APPLICATION_CREDENTIALS)
@@ -24,7 +24,7 @@ export const load = async () => {
       }
     : {
         projectId: GCLOUD_PROJECT,
-        keyFilename: GOOGLE_APPLICATION_CREDENTIALS!,
+        keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
       };
   const db = new Firestore(settings);
 
