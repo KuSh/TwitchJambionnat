@@ -41,27 +41,6 @@
         la commande " !play " dans le tchat avant le lancement de chaque course.
       </li>
       <li>
-        Gartic Show : La première personne à deviner ce que le streamer dessine
-        marque un point pour la manche. Au bout d'une manche (5 dessins), la
-        personne qui a le plus de points dans GS remporte trois points pour le
-        Jambionnat du mois en cours. Attention : GS est assez sensible à la
-        casse donc il faudra écrire les bonnes lettres (sauf les accents et les
-        espaces qu'il ne reconnaît apparemment pas).
-      </li>
-      <li>
-        Skyjo : Trois viewers s'affrontent sur un jeu de cartes tout simple
-        (voir <a
-          href="http://jeuxstrategie1.free.fr/jeu_skyjo/regle.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-indigo-500 dark:text-blue-500 hover:underline"
-          >les règles du jeu</a
-        >). Les participants doivent faire des choix stratégiques (utiliser une
-        carte de la défausse ou de la pioche, faire un combo etc) afin d'avoir
-        le moins de points en fin de manche. La personne qui remporte la manche
-        gagne cinq points pour le Jambionnat du mois suivant.
-      </li>
-      <li>
         Cacas volants : Périodiquement, un petit caca volant apparaîtra
         au-dessus des Avatars. Votre but est de l'attraper en utilisant les
         commandes d'action (jump ou sling) de l'extension StreamAvatars dispo à

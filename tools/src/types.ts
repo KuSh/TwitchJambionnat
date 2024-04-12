@@ -4,28 +4,23 @@ export const BasketBallVictoryType = "basketball:victory";
 export const BattleRoyalePoopType = "battleroyale:poop";
 export const BattleRoyaleVictoryType = "battleroyale:victory";
 export const DuelVictoryType = "duel:victory";
-export const GarticShowVictoryType = "garticshow:victory";
 export const MarblesVictoryType = "marbles:victory";
-export const SkyjoVictoryType = "skyjo:victory";
 
 export type EventType =
   | typeof BasketBallVictoryType
   | typeof BattleRoyalePoopType
   | typeof BattleRoyaleVictoryType
   | typeof DuelVictoryType
-  | typeof GarticShowVictoryType
   | typeof MarblesVictoryType
-  | typeof SkyjoVictoryType;
 
 export const INSTANT_TYPES = [
   BasketBallVictoryType,
   BattleRoyalePoopType,
   BattleRoyaleVictoryType,
   DuelVictoryType,
-  GarticShowVictoryType,
 ];
 
-export const DELAYED_TYPES = [MarblesVictoryType, SkyjoVictoryType];
+export const DELAYED_TYPES = [MarblesVictoryType];
 
 type BaseEvent<T extends EventType> = {
   type: T;
@@ -39,18 +34,14 @@ export type BasketBallVictory = BaseEvent<typeof BasketBallVictoryType>;
 export type BattleRoyalePoop = BaseEvent<typeof BattleRoyalePoopType>;
 export type BattleRoyaleVictory = BaseEvent<typeof BattleRoyaleVictoryType>;
 export type DuelVictory = BaseEvent<typeof DuelVictoryType>;
-export type GarticShowVictory = BaseEvent<typeof GarticShowVictoryType>;
 export type MarblesVictory = BaseEvent<typeof MarblesVictoryType>;
-export type SkyjoVictory = BaseEvent<typeof SkyjoVictoryType>;
 
 export type Event =
   | BasketBallVictory
   | BattleRoyalePoop
   | BattleRoyaleVictory
   | DuelVictory
-  | GarticShowVictory
-  | MarblesVictory
-  | SkyjoVictory;
+  | MarblesVictory;
 
 export type Stats = Partial<Record<EventType, number>>;
 

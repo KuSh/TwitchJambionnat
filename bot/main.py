@@ -18,9 +18,7 @@ COMMAND_EVENTS = {
     "basket": "basketball:victory",
     "br": "battleroyale:victory",
     "duel": "duel:victory",
-    "gartic": "garticshow:victory",
     "marbles": "marbles:victory",
-    "skyjo": "skyjo:victory",
 }
 
 COMMAND_PATTERN = (
