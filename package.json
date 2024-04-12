@@ -10,28 +10,20 @@
   "bugs": "https://github.com/KuSh/Twitch-SA-Leaderboard/issues",
   "engines": {
     "node": "^18.13.0",
-    "yarn": "^1.22.17"
+    "pnpm": "^8.15.6"
   },
   "scripts": {
-    "build": "yarn workspaces run build",
-    "check": "yarn workspaces run check",
-    "clean": "yarn workspaces run clean",
-    "format": "yarn workspaces run format",
-    "lint": "yarn workspaces run lint",
+    "build": "pnpm run --recursive build",
+    "check": "pnpm run --recursive check",
+    "clean": "pnpm run --recursive clean",
+    "format": "pnpm run --recursive format",
+    "lint": "pnpm run --recursive lint",
     "start:emulators": "firebase emulators:start --only firestore,functions --import .data --export-on-exit",
-    "start:functions": "yarn workspace functions run start",
-    "start:site": "yarn workspace site run start",
-    "start": "npm-run-all --parallel start:**"
+    "start:functions": "pnpm --filter functions run start",
+    "start:site": "pnpm --filter site run start",
+    "start": "pnpm run --stream /^start:.*/"
   },
   "devDependencies": {
-    "firebase-tools": "^13.0.2",
-    "npm-run-all": "^4.1.5"
-  },
-  "workspaces": {
-    "packages": [
-      "functions",
-      "site",
-      "tools"
-    ]
+    "firebase-tools": "^13.0.2"
   }
 }

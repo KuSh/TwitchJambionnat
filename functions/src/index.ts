@@ -118,13 +118,13 @@ export const launchWorkflow = async (event: Event) => {
         "Content-Type": "application/json",
       },
       method: "POST",
-    }
+    },
   );
 
   if (!response.ok) {
     logger.error(
       `Status ${response.url} on ${response.status}`,
-      await response.json()
+      await response.json(),
     );
     return false;
   }
@@ -145,5 +145,5 @@ export const onEventCreated = onDocumentCreated(
     await updateStats(event);
 
     return launchWorkflow(event);
-  }
+  },
 );

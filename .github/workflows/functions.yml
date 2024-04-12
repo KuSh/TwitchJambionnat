@@ -17,12 +17,15 @@ jobs:
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > "$GOOGLE_APPLICATION_CREDENTIALS"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS" >> $GITHUB_ENV
           echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
       - run: |
-          yarn install --frozen-lockfile
-          yarn workspace functions run build
-          yarn exec -- firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
-          yarn exec -- firebase deploy --only functions
+          pnpm install --frozen-lockfile
+          pnpm --filter functions run build
+          pnpm exec firebase use ${{ secrets.FIREBASE_PROJECT_ID }}
+          pnpm exec firebase deploy --only functions
