@@ -28,7 +28,7 @@ export const load: PageServerLoad = async () => {
       };
   const db = new Firestore(settings);
 
-  const month = DateTime.local().toISODate()!.slice(0, 7);
+  const month = DateTime.local().toISODate().slice(0, 7);
 
   const stats = (await db
     .doc(`stats/${month}`)

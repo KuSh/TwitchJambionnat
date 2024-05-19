@@ -11,7 +11,7 @@ export type EventType =
   | typeof BattleRoyalePoopType
   | typeof BattleRoyaleVictoryType
   | typeof DuelVictoryType
-  | typeof MarblesVictoryType
+  | typeof MarblesVictoryType;
 
 export const INSTANT_TYPES = [
   BasketBallVictoryType,

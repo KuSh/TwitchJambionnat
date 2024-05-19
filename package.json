@@ -24,7 +24,7 @@
     "start": "pnpm run --stream /^start:.*/"
   },
   "devDependencies": {
-    "firebase-tools": "^13.7.2"
+    "firebase-tools": "^13.9.0"
   },
   "resolutions": {
     "protobufjs@>=7.0.0 <7.2.5": "^7.2.5"
