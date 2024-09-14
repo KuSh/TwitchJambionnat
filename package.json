@@ -24,6 +24,6 @@
     "start": "pnpm run --stream /^start:.*/"
   },
   "devDependencies": {
-    "firebase-tools": "^13.11.2"
+    "firebase-tools": "^13.17.0"
   }
 }

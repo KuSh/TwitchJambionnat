@@ -17,6 +17,7 @@ module.exports = {
     sourceType: "module",
     ecmaVersion: 2021,
     project: ["./tsconfig.json"],
+    tsconfigRootDir: __dirname,
   },
   env: {
     es2021: true,

@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access,
+                  @typescript-eslint/no-unsafe-call,
+                  @typescript-eslint/no-unsafe-assignment
+  --
+  Until https://github.com/faker-js/faker/issues/3087 is fixed
+*/
+
 import { faker } from "@faker-js/faker/locale/fr";
 import dotenv from "dotenv";
 import { Firestore } from "firebase-admin/firestore";
