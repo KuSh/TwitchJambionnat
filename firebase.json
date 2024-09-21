@@ -17,7 +17,7 @@
         "tsconfig.json"
       ],
       "source": "functions",
-      "runtime": "nodejs18"
+      "runtime": "nodejs20"
     }
   ],
   "emulators": {
