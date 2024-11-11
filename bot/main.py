@@ -22,7 +22,7 @@ COMMAND_EVENTS = {
 }
 
 COMMAND_PATTERN = (
-    r"^!jambot (?P<event>" + "|".join(COMMAND_EVENTS.keys()) + ") @?(?P<name>\w+)$"
+    r"^!jambot (?P<event>" + "|".join(COMMAND_EVENTS.keys()) + r") @?(?P<name>\w+)$"
 )
 
 USER_ALIASES = {
