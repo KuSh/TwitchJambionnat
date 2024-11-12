@@ -91,6 +91,9 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^4.0.0
         version: 4.0.0(svelte@5.1.15)(vite@5.4.11(@types/node@22.9.0))
+      '@swc/html':
+        specifier: ^1.9.2
+        version: 1.9.2
       '@types/eslint-config-prettier':
         specifier: ^6.11.3
         version: 6.11.3
@@ -861,6 +864,73 @@ packages:
     peerDependencies:
       svelte: ^5.0.0-next.96 || ^5.0.0
       vite: ^5.0.0
+
+  '@swc/counter@0.1.3':
+    resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
+
+  '@swc/html-darwin-arm64@1.9.2':
+    resolution: {integrity: sha512-ZUdSXezeJrYgzrUv5alsjBI5wPMks/DyskHypOD6XwFJq1rFYRlFkiiwgf1U/uVSZnseIoXezBURnPliWpkrHQ==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@swc/html-darwin-x64@1.9.2':
+    resolution: {integrity: sha512-5/8xDeP10VjEP5MhMAe83EDeh3rlB+BHbZB6mVFxP1NuEfY1DlW+z3+wPKp0qsvkPcK+82nZu43hystTkCXHhQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@swc/html-linux-arm-gnueabihf@1.9.2':
+    resolution: {integrity: sha512-AJQ8FpbVC2hx0upqe15b/i8PUpye5B8W0sEw8bOz/PAV7Ub+P+qFXBPmu1qFz+GLtIE+yAvhA8GRrReXJvALQQ==}
+    engines: {node: '>=10'}
+    cpu: [arm]
+    os: [linux]
+
+  '@swc/html-linux-arm64-gnu@1.9.2':
+    resolution: {integrity: sha512-rhTeDQjXo9gYK8OPGTsgXl1a0pKPnXLHeF2DfRGpAdOqChRdS3GEOX2Qawl7+fRjJ5UGs0/lOXo+BWwVcPyrSw==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@swc/html-linux-arm64-musl@1.9.2':
+    resolution: {integrity: sha512-zJGhfYARjVaQ1bJ0NBsmoG7GYqXx/Qi5WnDEvq+jK5Ue9u6++Xeit5X9vVx67+B20w0ecngM5RqD9Yoc34MT4g==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@swc/html-linux-x64-gnu@1.9.2':
+    resolution: {integrity: sha512-acbKaR7/dnYJ8g0GeQGEmWTmMuEMr3+8blJJ/ksxHjIopsWjNplLaKNCM8GfvF7vjIr9zgtLgP3NB+e3OLagKg==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@swc/html-linux-x64-musl@1.9.2':
+    resolution: {integrity: sha512-wuNhqpkN1ZZWj/4RGHH+Cz1tjs7NfEu53en13YzDjwfPxsIfnbksQ0UD/uEVp8l8alsniJ9EokzXgfenmjDvlQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@swc/html-win32-arm64-msvc@1.9.2':
+    resolution: {integrity: sha512-x2H2aWZX4HbU09rDWsf6W7fS0ApJwNBlthBDlMZj6gGzTgkRQtNwD/gpg3eRZmu5DxsnmBZ2a/rxxiU1IMv5mA==}
+    engines: {node: '>=10'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@swc/html-win32-ia32-msvc@1.9.2':
+    resolution: {integrity: sha512-4bMY6HHAEVtX8buJm69XVs5sucxce9gyEzcNCXy2rfXAG9kxClE/ZbMWhXl3z6nYRWKBuoPoaL2eio1dEAvyTQ==}
+    engines: {node: '>=10'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@swc/html-win32-x64-msvc@1.9.2':
+    resolution: {integrity: sha512-HbxGfXT3KzSlo8uvoiQL8Q9ZnWzxHGYoe2emwFS5FeQuR01LMF0MWB3r2NhAYGx+DlD2h/3BR/hSM1qiDjl9VQ==}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@swc/html@1.9.2':
+    resolution: {integrity: sha512-HoRqmYbxribu9thQ8vDshh6mgVcs2MSF0lEdoRBUBGcXbLwOMdCQMncbJoVguy0ehmmOzBwt+9qnP58IY+RWbg==}
+    engines: {node: '>=14'}
 
   '@tootallnate/once@2.0.0':
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
@@ -4692,6 +4762,53 @@ snapshots:
       vitefu: 1.0.3(vite@5.4.11(@types/node@22.9.0))
     transitivePeerDependencies:
       - supports-color
+
+  '@swc/counter@0.1.3': {}
+
+  '@swc/html-darwin-arm64@1.9.2':
+    optional: true
+
+  '@swc/html-darwin-x64@1.9.2':
+    optional: true
+
+  '@swc/html-linux-arm-gnueabihf@1.9.2':
+    optional: true
+
+  '@swc/html-linux-arm64-gnu@1.9.2':
+    optional: true
+
+  '@swc/html-linux-arm64-musl@1.9.2':
+    optional: true
+
+  '@swc/html-linux-x64-gnu@1.9.2':
+    optional: true
+
+  '@swc/html-linux-x64-musl@1.9.2':
+    optional: true
+
+  '@swc/html-win32-arm64-msvc@1.9.2':
+    optional: true
+
+  '@swc/html-win32-ia32-msvc@1.9.2':
+    optional: true
+
+  '@swc/html-win32-x64-msvc@1.9.2':
+    optional: true
+
+  '@swc/html@1.9.2':
+    dependencies:
+      '@swc/counter': 0.1.3
+    optionalDependencies:
+      '@swc/html-darwin-arm64': 1.9.2
+      '@swc/html-darwin-x64': 1.9.2
+      '@swc/html-linux-arm-gnueabihf': 1.9.2
+      '@swc/html-linux-arm64-gnu': 1.9.2
+      '@swc/html-linux-arm64-musl': 1.9.2
+      '@swc/html-linux-x64-gnu': 1.9.2
+      '@swc/html-linux-x64-musl': 1.9.2
+      '@swc/html-win32-arm64-msvc': 1.9.2
+      '@swc/html-win32-ia32-msvc': 1.9.2
+      '@swc/html-win32-x64-msvc': 1.9.2
 
   '@tootallnate/once@2.0.0': {}
 
