@@ -1,14 +1,14 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   import image from "$lib/assets/jambionnat-256.png";
   import type { Player as BasePlayer, Stats } from "$lib/types";
   import {
-    BasketBallVictoryType,
-    BattleRoyalePoopType,
-    BattleRoyaleVictoryType,
-    DuelVictoryType,
-    GarticShowVictoryType,
-    MarblesVictoryType,
-    SkyjoVictoryType,
+      BasketBallVictoryType,
+      BattleRoyalePoopType,
+      BattleRoyaleVictoryType,
+      DuelVictoryType,
+      GarticShowVictoryType,
+      MarblesVictoryType,
+      SkyjoVictoryType,
   } from "$lib/types";
   import type { PageServerData } from "./$types";
 
@@ -19,9 +19,7 @@
 </script>
 
 <script lang="ts">
-  export let data: PageServerData;
-
-  export let stats = data.stats;
+  let { data, stats = data.stats }: { data:PageServerData, stats: typeof data.stats } = $props();
 
   export const score = ({
     "basketball:victory": baskets = 0,
