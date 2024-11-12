@@ -1,5 +1,4 @@
 <script lang="ts" module>
-  import image from "$lib/assets/jambionnat-256.png";
   import type { Player as BasePlayer, Stats } from "$lib/types";
   import {
       BasketBallVictoryType,
@@ -19,6 +18,8 @@
 </script>
 
 <script lang="ts">
+  import image from "$lib/assets/jambionnat-256.png?enhanced";
+
   let { data, stats = data.stats }: { data:PageServerData, stats: typeof data.stats } = $props();
 
   export const score = ({
@@ -54,7 +55,7 @@
 <main
   class="rounded-xl m-1 lg:m-auto lg:my-8 lg:max-w-4xl p-4 lg:p-8 bg-white dark:bg-[#0d0d0d] drop-shadow-lg dark:drop-shadow-none"
 >
-  <img class="mx-auto" src={image} width="197" height="256" alt="" />
+  <enhanced:img class="mx-auto" src={image} alt="" />
   <nav class="uppercase my-8 flex flex-col">
     <a
       class="text-indigo-500 dark:text-blue-500 hover:underline w-min mx-auto"
