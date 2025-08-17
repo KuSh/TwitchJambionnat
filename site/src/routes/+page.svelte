@@ -1,51 +1,20 @@
 <script lang="ts" module>
-  import type { Player as BasePlayer, Stats } from "$lib/types";
   import {
-      BasketBallVictoryType,
-      BattleRoyalePoopType,
-      BattleRoyaleVictoryType,
-      DuelVictoryType,
-      GarticShowVictoryType,
-      MarblesVictoryType,
-      SkyjoVictoryType,
+    BasketBallVictoryType,
+    BattleRoyalePoopType,
+    BattleRoyaleVictoryType,
+    DuelVictoryType,
+    GarticShowVictoryType,
+    MarblesVictoryType,
+    SkyjoVictoryType,
   } from "$lib/types";
   import type { PageServerData } from "./$types";
-
-  interface Player extends BasePlayer {
-    index: number;
-    score: number;
-  }
 </script>
 
 <script lang="ts">
   import image from "$lib/assets/jambionnat-256.png?enhanced";
 
-  let { data, stats = data.stats }: { data:PageServerData, stats: typeof data.stats } = $props();
-
-  export const score = ({
-    "basketball:victory": baskets = 0,
-    "battleroyale:victory": battles = 0,
-    "duel:victory": duels = 0,
-    "garticshow:victory": gartics = 0,
-    "marbles:victory": marbles = 0,
-    "skyjo:victory": skyjos = 0,
-  }: Stats) => {
-    return battles + duels + 3 * (baskets + gartics) + 5 * (marbles + skyjos);
-  };
-
-  export const scores =
-    data.players
-      ?.map((player) => ({ ...player, score: score(player) }))
-      .sort(
-        (a, b) =>
-          b.score - a.score || a.display_name.localeCompare(b.display_name),
-      )
-      .reduce((scores, player, index) => {
-        return scores.set(player.score, [
-          ...(scores.get(player.score) ?? []),
-          { ...player, index },
-        ]);
-      }, new Map<number, [Player, ...Player[]]>()) ?? [];
+  let { data }: { data: PageServerData } = $props();
 </script>
 
 <svelte:head>
@@ -70,7 +39,7 @@
 
   <table class="w-full">
     <caption class="caption-bottom text-center">
-      Nombre de battles royale : {stats?.[BattleRoyaleVictoryType] ?? 0}
+      Nombre de battles royale : {data?.stats?.[BattleRoyaleVictoryType] ?? 0}
     </caption>
     <thead>
       <tr class="border-b-2 text-left">
@@ -80,9 +49,9 @@
         <th scope="col" class="text-center">💩</th>
       </tr>
     </thead>
-    {#each scores as [score, players], place}
+    {#each data.scores ?? [] as [score, players], place (place)}
       <tbody>
-        {#each players as player, i}
+        {#each players as player, i (i)}
           <tr
             class="border-t leading-8 {player.index % 2
               ? 'bg-white dark:bg-[#0d0d0d]'
@@ -107,19 +76,19 @@
             <td>
               {score}
               {#if player[MarblesVictoryType]}
-                {" "}<span class="text-sm">🌕</span>
+                <span class="text-sm"> 🌕</span>
               {/if}
-              {#each new Array(player[BasketBallVictoryType] ?? 0) as _}
-                {" "}<span class="text-sm">🏀</span>
+              {#each new Array(player[BasketBallVictoryType] ?? 0) as _, i (i)}
+                <span class="text-sm"> 🏀</span>
               {/each}
-              {#each new Array(player[DuelVictoryType] ?? 0) as _}
-                {" "}<span class="text-sm">⚔️</span>
+              {#each new Array(player[DuelVictoryType] ?? 0) as _, i (i)}
+                <span class="text-sm"> ⚔️</span>
               {/each}
-              {#each new Array(player[SkyjoVictoryType] ?? 0) as _}
-                {" "}<span class="text-sm">🎴</span>
+              {#each new Array(player[SkyjoVictoryType] ?? 0) as _, i (i)}
+                <span class="text-sm"> 🎴</span>
               {/each}
-              {#each new Array(player[GarticShowVictoryType] ?? 0) as _}
-                {" "}<span class="text-sm">✏️</span>
+              {#each new Array(player[GarticShowVictoryType] ?? 0) as _, i (i)}
+                <span class="text-sm"> ✏️</span>
               {/each}
             </td>
             <td class="text-center">

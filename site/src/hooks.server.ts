@@ -8,7 +8,6 @@ const OPTIONS = {
   tagOmission: false,
 };
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
 export const handle: Handle = async ({ event, resolve }) => {
   let page = "";
 

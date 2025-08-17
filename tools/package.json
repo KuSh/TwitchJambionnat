@@ -12,29 +12,26 @@
     "lint": "prettier --check . && eslint .",
     "seed:events": "tsc && node dist/seed-events.js",
     "catchup": "tsc && node dist/catch-up.js",
-    "create-stats": "tsc && node dist/create-stats.js",
     "rewrite": "tsc && node dist/rewrite.js"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.4.0",
-    "dotenv": "^16.4.7",
-    "firebase-admin": "^12.7.0",
-    "luxon": "^3.5.0",
-    "node-fetch": "^3.3.2"
+    "@faker-js/faker": "^9.9.0",
+    "dotenv": "^17.2.1",
+    "firebase-admin": "^13.4.0",
+    "luxon": "^3.7.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.19.0",
-    "@tsconfig/node20": "^20.1.4",
+    "@eslint/js": "^9.33.0",
+    "@tsconfig/node20": "^20.1.6",
     "@tsconfig/strictest": "^2.0.5",
     "@types/eslint-config-prettier": "^6.11.3",
-    "@types/eslint__js": "^8.42.3",
-    "@types/luxon": "^3.4.2",
-    "@types/node": "^20.17.16",
-    "eslint": "^9.19.0",
-    "eslint-config-prettier": "^9.1.0",
-    "globals": "^15.14.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.22.0"
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^22.17.2",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1"
   }
 }

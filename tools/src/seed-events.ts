@@ -32,7 +32,7 @@ const seedEvents = async () => {
   const USERS = Array.from({
     length: Math.ceil(30 + Math.random() * 10),
   }).map(() => {
-    const display_name = faker.internet.userName();
+    const display_name = faker.internet.username();
     return { name: display_name.toLowerCase(), display_name };
   });
 

@@ -9,8 +9,8 @@
   "homepage": "https://github.com/KuSh/Twitch-SA-Leaderboard#readme",
   "bugs": "https://github.com/KuSh/Twitch-SA-Leaderboard/issues",
   "engines": {
-    "node": "^20.17.0",
-    "pnpm": "^9.3.0"
+    "node": "^22.18.0",
+    "pnpm": "^10.14.0"
   },
   "scripts": {
     "build": "pnpm run --recursive build",
@@ -24,7 +24,7 @@
     "start": "pnpm run --stream /^start:.*/"
   },
   "devDependencies": {
-    "firebase-tools": "^13.29.3"
+    "firebase-tools": "^14.12.1"
   },
   "pnpm": {
     "overrides": {

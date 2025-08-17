@@ -3,9 +3,7 @@ import type { Timestamp } from "firebase-admin/firestore";
 import { FieldValue, getFirestore } from "firebase-admin/firestore";
 import { logger } from "firebase-functions/v2";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
-import { Agent } from "https";
 import { DateTime } from "luxon";
-import fetch from "node-fetch";
 
 const BasketBallVictoryType = "basketball:victory";
 const BattleRoyalePoopType = "battleroyale:poop";
@@ -98,7 +96,6 @@ export const updateStats = async (event: Event) => {
   await col.doc(`${month}/players/${event.name}`).set(player, { merge: true });
 };
 
-const agent = new Agent({ keepAlive: true });
 export const launchWorkflow = async (event: Event) => {
   if (!INSTANT_TYPES.includes(event.type)) return true;
 
@@ -110,7 +107,6 @@ export const launchWorkflow = async (event: Event) => {
   const response = await fetch(
     `https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/workflows/${GITHUB_WORKFLOW}/dispatches`,
     {
-      agent,
       body: JSON.stringify({ ref: "main" }),
       headers: {
         Accept: "application/vnd.github+json",

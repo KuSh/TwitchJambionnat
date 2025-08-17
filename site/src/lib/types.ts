@@ -59,3 +59,10 @@ export interface Player extends Stats {
   display_name: string;
   path?: string;
 }
+
+interface IndexedPlayer extends Player {
+  index: number;
+  score: number;
+}
+
+export type Scores = Map<number, [IndexedPlayer, ...IndexedPlayer[]]>;
