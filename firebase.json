@@ -11,6 +11,7 @@
       "ignore": [
         ".*",
         "*.log",
+        "eslint.config.js",
         "global.d.ts",
         "node_modules",
         "src",
