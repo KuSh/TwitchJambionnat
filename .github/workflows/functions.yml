@@ -19,10 +19,10 @@ jobs:
           echo "GCLOUD_PROJECT=${{ secrets.FIREBASE_PROJECT_ID }}" >> $GITHUB_ENV
       - uses: pnpm/action-setup@v4
         with:
-          version: ^10.14.0
+          version: ^10.15.0
       - uses: actions/setup-node@v4
         with:
-          node-version: ^22.18.0
+          node-version: ^22.19.0
           cache: "pnpm"
       - run: |
           pnpm --filter ...functions install --frozen-lockfile
