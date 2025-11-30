@@ -1,3 +1,7 @@
+<script>
+  import { resolve } from "$app/paths";
+</script>
+
 <svelte:head>
   <title>Présentation des jeux du Jambionnat</title>
 </svelte:head>
@@ -6,8 +10,9 @@
   class="rounded-xl m-1 lg:m-auto lg:my-8 lg:max-w-4xl p-4 lg:p-8 bg-white dark:bg-white/5 drop-shadow-lg dark:drop-shadow-none"
 >
   <nav>
-    <a href="/" class="text-indigo-500 dark:text-blue-500 hover:underline"
-      >&lt; Retour</a
+    <a
+      href={resolve("/")}
+      class="text-indigo-500 dark:text-blue-500 hover:underline">&lt; Retour</a
     >
   </nav>
   <h1 class="text-2xl font-semibold text-center my-8">
