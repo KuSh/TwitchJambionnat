@@ -1,3 +1,5 @@
 # SA Leaderboard
 
-Collects and display battle royale leaderboard per months
+This project is no longer actively supported.
+
+> Collect and display battle royale leaderboard per months.
